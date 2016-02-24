@@ -1,5 +1,6 @@
 package fr.univavignon.courbes.physics.simpleimpl;
 
+import fr.univavignon.courbes.sounds.*;
 /*
  * Courbes
  * Copyright 2015-16 L3 Info UAPV 2015-16
@@ -102,7 +103,10 @@ public class PhysItemInstance extends ItemInstance
 	 * 		Position en ordonnée.
 	 */
 	private void init(ItemType type, int x, int y)
-	{	this.itemId = ID_COUNT++;
+	{	
+		Sound_Engine a = new Sound_Engine();
+		a.playSound("res/sounds/blop.wav");
+		this.itemId = ID_COUNT++;
 		
 		this.type = type;
 		this.x = x;
