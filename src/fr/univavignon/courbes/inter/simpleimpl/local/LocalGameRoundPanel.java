@@ -19,6 +19,7 @@ package fr.univavignon.courbes.inter.simpleimpl.local;
  */
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import fr.univavignon.courbes.common.Constants;
@@ -26,6 +27,7 @@ import fr.univavignon.courbes.common.Direction;
 import fr.univavignon.courbes.inter.simpleimpl.AbstractRoundPanel;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
+import fr.univavignon.courbes.sounds.Sound_Engine;
 
 /**
  * Panel utilisé pour afficher le jeu proprement dit,
@@ -50,7 +52,12 @@ public class LocalGameRoundPanel extends AbstractRoundPanel
 
 	@Override
 	public void run()
-	{	playMatch();
+	{	
+		
+		Sound_Engine a = new Sound_Engine();
+		a.playBack();
+		
+		playMatch();
 		
 		// TODO la mise à jour des stats devrait être faite ici
 		

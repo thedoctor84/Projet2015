@@ -40,6 +40,8 @@ public class PhysItemInstance extends ItemInstance
 	/** Générateur aléatoire utilisé lors de l'apparition d'items */
 	private static final Random RANDOM = new Random();
 	
+	Sound_Engine a = new Sound_Engine();
+	
 	/**
 	 * Crée un item placé à la position spécifiée.
 	 * 
@@ -104,8 +106,8 @@ public class PhysItemInstance extends ItemInstance
 	 */
 	private void init(ItemType type, int x, int y)
 	{	
-		Sound_Engine a = new Sound_Engine();
-		a.playSound("res/sounds/blop.wav");
+		
+		a.playPopItem();
 		this.itemId = ID_COUNT++;
 		
 		this.type = type;
@@ -223,8 +225,10 @@ public class PhysItemInstance extends ItemInstance
 		
 		// item collectif avec effet ponctuel
 		if(type==ItemType.COLLECTIVE_CLEAN)
+		{
+			a.playErase();
 			board.mustClean = true;
-	
+		}
 		// item collectif avec effet dans la durée
 		else if(type==ItemType.COLLECTIVE_TRAVERSE)
 		{	remainingTime = type.duration;
@@ -246,6 +250,16 @@ public class PhysItemInstance extends ItemInstance
 		else if(type==ItemType.USER_FAST || type==ItemType.USER_FLY || type==ItemType.USER_SLOW)
 		{	remainingTime = type.duration;
 			snake.currentItems.offer(this);
+			
+			if(type == ItemType.USER_FAST)
+			{
+				a.playSpeed();
+			}
+			
+			if(type == ItemType.USER_SLOW)
+			{
+				a.playUnspeed();
+			}
 		}
 		
 		// item individuel visant les joueurs autres que le ramasseur
@@ -256,6 +270,16 @@ public class PhysItemInstance extends ItemInstance
 				{	PhysItemInstance item = new PhysItemInstance(this);
 					s.currentItems.offer(item);
 				}
+			}
+			
+			if(type == ItemType.OTHERS_FAST)
+			{
+				a.playSpeed();
+			}
+			
+			if(type == ItemType.OTHERS_SLOW)
+			{
+				a.playUnspeed();
 			}
 		}
 	}

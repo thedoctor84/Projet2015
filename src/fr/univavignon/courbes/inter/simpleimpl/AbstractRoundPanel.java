@@ -19,6 +19,7 @@ package fr.univavignon.courbes.inter.simpleimpl;
  */
 
 import java.util.Arrays;
+
 import java.util.List;
 
 import javax.swing.Box;
@@ -37,6 +38,7 @@ import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.local.KeyManager;
 import fr.univavignon.courbes.physics.PhysicsEngine;
 import fr.univavignon.courbes.physics.simpleimpl.PhysicsEngineImpl;
+import fr.univavignon.courbes.sounds.*;
 
 /**
  * Panel utilisé pour afficher le jeu proprement dit,
@@ -132,6 +134,7 @@ public abstract class AbstractRoundPanel extends JPanel implements Runnable
 	
 	/**
 	 * Effectue la partie tout entière, i.e. plusieurs manches.
+	 * 
 	 */
 	protected void playMatch()
 	{	totalPoints = new int[round.players.length];
@@ -156,14 +159,20 @@ public abstract class AbstractRoundPanel extends JPanel implements Runnable
 			
 			// on affiche éventuellement le vainqueur de la partie
 			if(matchOver)
-			{	Profile profile = players[maxIdx].profile;
+			{		
+				Profile profile = players[maxIdx].profile;
 				String name = profile.userName;
 				JOptionPane.showMessageDialog(mainWindow, "Le joueur "+name+"a gagné la partie !");
 			}
 			
 			// ou bien celui de la manche, et on recommence
 			else
-			{	int maxIdx2 = 0;
+			{	
+				
+				Sound_Engine b = new Sound_Engine();
+				b.playWin();
+		
+				int maxIdx2 = 0;
 				for(int i=0;i<players.length;i++)
 				{	if(players[i].roundScore>players[maxIdx2].roundScore)
 					maxIdx2 = i;

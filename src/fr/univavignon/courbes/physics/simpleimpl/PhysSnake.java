@@ -33,6 +33,7 @@ import fr.univavignon.courbes.common.ItemInstance;
 import fr.univavignon.courbes.common.Position;
 import fr.univavignon.courbes.common.Snake;
 import fr.univavignon.courbes.inter.simpleimpl.SettingsManager;
+import fr.univavignon.courbes.sounds.*;
 
 /**
  * Classe fille de {@link Snake}, permettant d'intégrer
@@ -386,6 +387,8 @@ public class PhysSnake extends Snake
 					|| pos.x>=boardWidth-Constants.BORDER_THICKNESS)
 				{	// on marque la collision
 					eliminatedBy = -1;
+					Sound_Engine a = new Sound_Engine();
+					a.playDeath();
 					result = true;
 					// on restreint la nouvelle position du serpent
 					it.remove();
@@ -402,7 +405,10 @@ public class PhysSnake extends Snake
 				{	boolean changed = physicalTrail.removeAll(snake.oldTrail)
 						|| physicalTrail.removeAll(snake.newTrail);
 					if(changed)
-					{	eliminatedBy = i;
+					{
+						Sound_Engine a = new Sound_Engine();
+						a.playDeath();
+						eliminatedBy = i;
 						result = true;
 					}
 				}
