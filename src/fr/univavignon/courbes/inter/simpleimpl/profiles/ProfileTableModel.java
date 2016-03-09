@@ -23,8 +23,10 @@ import java.util.List;
 import java.util.TreeSet;
 
 import javax.swing.table.AbstractTableModel;
-
 import fr.univavignon.courbes.common.Profile;
+import fr.univavignon.courbes.network.central.*;
+import java.util.Vector;
+import java.io.*;
 
 /**
  * Modèle associé à la table affichant la liste des profils
@@ -57,6 +59,8 @@ public class ProfileTableModel extends AbstractTableModel
 			row.add(Integer.toString(profile.eloRank));
 			rowdata.add(row);
 		}
+		
+
 	}
 	
 	/** Données */

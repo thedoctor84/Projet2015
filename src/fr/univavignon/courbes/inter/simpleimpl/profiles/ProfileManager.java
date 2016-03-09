@@ -19,15 +19,15 @@ package fr.univavignon.courbes.inter.simpleimpl.profiles;
  */
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.TreeSet;
+import java.util.Vector;
+
+import fr.univavignon.courbes.network.central.*;
 
 import fr.univavignon.courbes.common.Profile;
 
@@ -55,7 +55,43 @@ public class ProfileManager
 	 * 		Liste des profils disponibles.
 	 */
 	public static TreeSet<Profile> getProfiles()
-	{	if(PROFILES.isEmpty())
+	{	
+		try{
+			
+			Profil_Res co = new Profil_Res("http://93.118.34.229/");
+			String temp="";
+			
+			temp = co.get();
+			Vector<String> t;
+			t = co.coupe_chaine(temp);
+			
+			FileWriter fichier = new FileWriter("res/profiles/profiles.txt",false);
+			BufferedWriter output = new BufferedWriter(fichier);
+			
+			for(int i=0;i!=t.size();i++){
+				
+				output.write(co.getPseudo(t.elementAt(i)));
+				output.write(",");
+				output.write(co.getPays(t.elementAt(i)));
+				output.write(",");
+				output.write(co.getElo(t.elementAt(i)));
+				output.write(",");
+				output.write("fake@fake.fake");
+				output.write(",");
+				output.write(co.getMdp(t.elementAt(i)));
+				output.write('\n');
+				
+			}
+			output.flush();
+			output.close();
+		}
+		
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+		
+		if(PROFILES.isEmpty())
 			loadProfiles();
 		return PROFILES;
 	}
