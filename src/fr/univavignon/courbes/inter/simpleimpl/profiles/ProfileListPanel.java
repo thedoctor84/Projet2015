@@ -35,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 import fr.univavignon.courbes.common.Profile;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
@@ -53,6 +54,10 @@ public class ProfileListPanel extends JPanel implements ActionListener, FocusLis
 	private static final String DEFAULT_NAME = "Nom";
 	/** Pays par défaut pour le champ texte */
 	private static final String DEFAULT_COUNTRY = "Pays";
+	/** Mot de passe par défaut pour le champ mot de passe */
+	private static final String DEFAULT_MDP = "Mot de passe";
+	/** Email par defaut pour le champ email */
+	private static final String DEFAULT_MAIL = "Email";
 	
 	/**
 	 * Crée un nouveau panel destiné à afficher la liste des profils.
@@ -77,6 +82,10 @@ public class ProfileListPanel extends JPanel implements ActionListener, FocusLis
 	private JTextField nameField;
 	/** Champ texte contenant le pays d'un nouveau profil */
 	private JTextField countryField;
+	/** Champ texte contenant le mot de passe d'un nouveau profil */
+	private JTextField mdpField;
+	/** Champ texte contenant le mail d'un nouveau profil */
+	private JTextField mailField;
 	/** Bouton pour revenir au menu principal */
 	private JButton backButton;
 	/** Bouton pour ajouter le nouveau profil */
@@ -147,6 +156,21 @@ public class ProfileListPanel extends JPanel implements ActionListener, FocusLis
 		countryField.setMaximumSize(dim);
 		countryField.setMinimumSize(dim);
 		add(countryField);
+		
+		
+		mdpField = new JTextField(DEFAULT_MDP);
+		mdpField.addFocusListener(this);
+		mdpField.setPreferredSize(dim);
+		mdpField.setMaximumSize(dim);
+		mdpField.setMinimumSize(dim);
+		add(mdpField);
+		
+		mailField = new JTextField(DEFAULT_MAIL);
+		mailField .addFocusListener(this);
+		mailField .setPreferredSize(dim);
+		mailField .setMaximumSize(dim);
+		mailField.setMinimumSize(dim);
+		add(mailField);
 	}
 	
 	/**
@@ -182,14 +206,18 @@ public class ProfileListPanel extends JPanel implements ActionListener, FocusLis
 	private void addPlayer()
 	{	String userName = nameField.getText();
 		String country = countryField.getText();
+		String mdp = mdpField.getText();
+		String mail = mailField.getText();
 
 		// on vérifie que les champs ont été remplis, et que le nom n'est pas déjà pris
-		if(!userName.isEmpty() && !country.isEmpty() && !ProfileManager.containsUserName(userName))
+		if(!userName.isEmpty() && !country.isEmpty() && !mdp.isEmpty() && !mail.isEmpty() && !ProfileManager.containsUserName(userName))
 		{	// on crée le profil
 			Profile profile = new Profile();
 			profile.userName = userName;
 			profile.country = country;
-			profile.eloRank = ProfileManager.getProfiles().size()+1;
+			profile.password = mdp;
+			profile.eloRank = 0;
+			profile.email = mail;
 			
 			// on le rajoute à la liste
 			ProfileManager.addProfile(profile);
@@ -201,6 +229,8 @@ public class ProfileListPanel extends JPanel implements ActionListener, FocusLis
 			// on réinitialise les champs texte
 			nameField.setText(DEFAULT_NAME);
 			countryField.setText(DEFAULT_COUNTRY);
+			mdpField.setText(DEFAULT_MDP);
+			mailField.setText(DEFAULT_MAIL);
 		}
 	}
 	
@@ -229,8 +259,16 @@ public class ProfileListPanel extends JPanel implements ActionListener, FocusLis
 	{	if(e.getSource()==nameField)
 		{	nameField.setText("");
 		}
-		else if(e.getSource()==countryField)
+		if(e.getSource()==countryField)
 		{	countryField.setText("");
+		}
+		if(e.getSource()==mdpField)
+		{
+			mdpField.setText("");
+		}
+		if(e.getSource()==mailField)
+		{
+			mailField.setText("");
 		}
 	}
 

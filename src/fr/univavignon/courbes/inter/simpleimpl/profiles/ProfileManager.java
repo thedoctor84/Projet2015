@@ -105,7 +105,26 @@ public class ProfileManager
 	 * 		Utilisateur à rajouter.
 	 */
 	public static void addProfile(Profile profile)
-	{	if(PROFILES.isEmpty())
+	{	
+		try
+		{
+			String a = "http://93.118.34.229/add.php?name=";
+			a+=profile.userName;
+			a+="&mdp=";
+			a+=profile.password;
+			a+="&mail=";
+			a+=profile.email;
+			a+="&pays=";
+			a+=profile.country;
+			Profil_Res co = new Profil_Res(a);
+			co.get();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+
+		if(PROFILES.isEmpty())
 			profile.profileId = 0;
 		else
 		{	Profile mx = Collections.max(PROFILES);
@@ -123,7 +142,20 @@ public class ProfileManager
 	 * 		Le profil à supprimer.
 	 */
 	public static void removeProfile(Profile profile)
-	{	PROFILES.remove(profile);
+	{	
+		try
+		{
+			String a = "http://93.118.34.229/sup.php?name=";
+			a+=profile.userName;
+			Profil_Res co = new Profil_Res(a);
+			co.get();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+		
+		PROFILES.remove(profile);
 		recordProfiles();
 	}
 	
