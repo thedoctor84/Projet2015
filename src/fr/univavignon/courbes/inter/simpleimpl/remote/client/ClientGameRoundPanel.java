@@ -18,6 +18,7 @@
  * along with Courbes. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,8 @@ import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.local.KeyManager;
 import fr.univavignon.courbes.network.ClientCommunication;
+import fr.univavignon.courbes.network.central.Profil_Res;
+import fr.univavignon.courbes.sounds.Sound_Engine;
 
 /**
  * Panel utilisé pour afficher le jeu proprement dit,
@@ -91,11 +94,45 @@ public class ClientGameRoundPanel extends AbstractRoundPanel implements ClientGa
 	@Override
 	public void run()
 	{	// on joue la partie (i.e. plusieurs manches)
-		playMatch();
 		
-		// TODO la mise à jour des stats devrait aller ici
-		// (soit calcul local, soit synchronisation avec le serveur)
+		Sound_Engine d = new Sound_Engine();
+		d.playBack();
+		String name = playMatch();
 		
+		int u = 0;
+		while(u < round.players.length)
+		{
+			if(round.players[u].profile.userName == name)
+			{
+				try
+				{
+					String a = "http://93.118.34.229/addone.php?name=";
+					a+=name;
+					Profil_Res co = new Profil_Res(a);
+					co.get();
+				}
+				catch(IOException e)
+				{
+					System.out.println(e);
+				}
+			}
+			
+			else
+			{
+				try
+				{
+					String a = "http://93.118.34.229/addloose.php?name=";
+					a+=round.players[u].profile.userName;
+					Profil_Res co = new Profil_Res(a);
+					co.get();
+				}
+				catch(IOException e)
+				{
+					System.out.println(e);
+				}
+			}	
+			u++;
+		}
 		// on repart au menu principal
 		clientCom.closeClient();
 		clientCom.setGameHandler(null);

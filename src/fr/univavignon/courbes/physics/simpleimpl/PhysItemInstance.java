@@ -231,7 +231,7 @@ public class PhysItemInstance extends ItemInstance
 		// item collectif avec effet ponctuel
 		if(type==ItemType.COLLECTIVE_CLEAN)
 		{
-			a.playErase();
+			//a.playErase();
 			board.mustClean = true;
 		}
 		// item collectif avec effet dans la durée

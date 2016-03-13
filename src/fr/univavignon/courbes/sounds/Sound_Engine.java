@@ -7,7 +7,7 @@ import java.io.*;
  * @author aurelien
  *
  */
-public class Sound_Engine implements Sound_Interface, Runnable
+public class Sound_Engine implements Sound_Interface, Runnable, Serializable
 {
 	/**
 	 *  Path to the sound file
