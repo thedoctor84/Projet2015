@@ -25,9 +25,11 @@ import java.util.TreeSet;
 import javax.swing.table.AbstractTableModel;
 import fr.univavignon.courbes.common.Profile;
 import fr.univavignon.courbes.network.central.*;
+import fr.univavignon.courbes.stats.GetStat;
+
 import java.util.Vector;
 import java.io.*;
-
+import java.util.Vector;
 /**
  * Modèle associé à la table affichant la liste des profils
  * (i.e. objet chargé de gérer le contenu la table concernée).
@@ -62,6 +64,52 @@ public class ProfileTableModel extends AbstractTableModel
 		
 
 	}
+	
+	public ProfileTableModel(int a)
+	{
+		rowdata = new ArrayList<List<String>>();
+
+		// on définit les titres des colonnes
+		columnNames = new String[7];
+		columnNames[0] = "Pseudo";
+		columnNames[1] = "Pays";
+		columnNames[2] = "Rang ELO";
+		columnNames[3] = "nbwin";
+		columnNames[4] = "nbloose";
+		
+		GetStat b = new GetStat();
+		
+		try{
+			String z = b.get();
+
+			if(z != null)
+			{
+				Vector<String> c = b.coupe_chaine(z);
+				int i = 0;
+
+			
+				for (i = 0; i < c.size(); i++)
+				{	List<String> row = new ArrayList<String>();
+					row.add(b.getPseudo(c.elementAt(i)));
+					row.add(b.getPays(c.elementAt(i)));
+					row.add(b.getElo(c.elementAt(i)));
+					row.add(b.getWin(c.elementAt(i)));
+					row.add(b.getLoose(c.elementAt(i)));
+					rowdata.add(row);
+				}
+			}
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+		
+		
+	}
+	
+	
+	
+	
 	
 	/** Données */
 	private List<List<String>> rowdata;
