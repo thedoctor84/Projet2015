@@ -1,9 +1,13 @@
 package fr.univavignon.courbes.stats;
 
 public class EloRankSystem {
+	
+	private int K;
 
-	public void NewElo(int OldElo1, int OldElo2) {
+	public int NewEloWinner(int OldElo) {
 		// http://setastyle.free.fr/chess/elo.php
 		// http://gobase.org/studying/articles/elo/
+	float theoricalScore = 0.5;
+	int newElo = (int)(OldElo+K*(1-theoricalScore));
 	}
 }
