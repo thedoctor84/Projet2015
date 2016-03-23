@@ -7,7 +7,7 @@ public class EloRankSystem {
 	public int NewEloWinner(int OldElo) {
 		// http://setastyle.free.fr/chess/elo.php
 		// http://gobase.org/studying/articles/elo/
-	float theoricalScore = 0.5;
+	double theoricalScore = 0.5;
 	int newElo = (int)(OldElo+K*(1-theoricalScore));
 	}
 }
