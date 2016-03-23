@@ -139,7 +139,7 @@ public class StatPanel extends JPanel implements ActionListener
 			mainWindow.displayPanel(PanelName.MAIN_MENU);
 	
 		if(e.getSource()==statButton)
-			mainWindow.displayPanel(PanelName.)
+			mainWindow.displayPanel(PanelName.GRAPH_STAT);
 	}
 	
 	

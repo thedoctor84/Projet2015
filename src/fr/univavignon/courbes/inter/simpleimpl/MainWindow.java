@@ -169,7 +169,9 @@ public class MainWindow extends JFrame implements ErrorHandler, WindowListener
 		/** Liste des profils */
 		PROFILE_LIST,
 		/** Affichage des statistiques */
-		STATISTICS;
+		STATISTICS,
+		/** Affichage des graphiques*/
+		GRAPH_STAT;
 	}
 	
 	/**
@@ -232,8 +234,11 @@ public class MainWindow extends JFrame implements ErrorHandler, WindowListener
 				
 			// stats
 			case STATISTICS:
-				System.out.println("Option pas encore implémentée...");
 				currentPanel = new StatPanel(this);
+				break;
+				
+			case GRAPH_STAT:
+				currentPanel = new GraphPanel(this);
 				break;
 		}
 		
