@@ -29,10 +29,16 @@ public interface Sound_Interface
 	 * play sound when someone win
 	 */
 	public void playWin();
-	
+	/**
+	 * play sound when someone take the speed bonus
+	 */
 	public void playSpeed();
-	
+	/**
+	 * play sound when someone take the unspeed bonus
+	 */
 	public void playUnspeed();
-	
+	/**
+	 * play sound when someone take the erase bonus
+	 */
 	public void playErase();
 }
