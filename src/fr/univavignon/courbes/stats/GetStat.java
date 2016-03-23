@@ -1,15 +1,18 @@
 package fr.univavignon.courbes.stats;
 
-import java.net.*;
-import java.io.*;
-import java.util.Vector;
+
 import fr.univavignon.courbes.network.central.*;
 
-
+/**
+ * 
+ * On recupère les stats des joueurs
+ *
+ */
 public class GetStat extends Profil_Res
 {
-	
-
+	/**
+	 * Recupere les stats du serveur central
+	 */
 	public GetStat()
 	{
 		super("http://93.118.34.229/");

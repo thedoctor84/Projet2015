@@ -10,6 +10,10 @@ import java.io.*;
 public class Sound_Engine implements Sound_Interface, Runnable, Serializable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 *  Path to the sound file
 	 */
 	private String name;
@@ -109,7 +113,9 @@ public class Sound_Engine implements Sound_Interface, Runnable, Serializable
 		t = new Thread(this);
 		t.start();
 	}
-	
+	/**
+	 * La musique en background
+	 */
 	public void playBack()
 	{
 		this.Set_Name("res/sounds/back.wav");
