@@ -127,7 +127,7 @@ public class StatPanel extends JPanel implements ActionListener
 		
 		panel.add(Box.createHorizontalGlue());
 		statButton = new JButton("Afficher");
-		backButton.addActionListener(this);
+		statButton.addActionListener(this);
 		panel.add(statButton);
 		
 		add(panel);
@@ -137,6 +137,9 @@ public class StatPanel extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{	if(e.getSource()==backButton)
 			mainWindow.displayPanel(PanelName.MAIN_MENU);
+	
+		if(e.getSource()==statButton)
+			mainWindow.displayPanel(PanelName.)
 	}
 	
 	

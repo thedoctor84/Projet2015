@@ -35,7 +35,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
+
 
 import fr.univavignon.courbes.common.Profile;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
@@ -138,6 +139,7 @@ public class ProfileListPanel extends JPanel implements ActionListener, FocusLis
 	 */
 	private void initTextFields()
 	{	JLabel newPlayerLabel = new JLabel("Nouveau profil");
+		newPlayerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(newPlayerLabel);
 		
 		Dimension frameDim = mainWindow.getPreferredSize();
