@@ -309,7 +309,17 @@ public class ServerGameRemotePlayerSelectionPanel extends AbstractPlayerSelectio
 	{	if(checkConfiguration())
 		{	
 		
-		
+		try{
+			ServerCommunicationImpl a = new ServerCommunicationImpl();
+			String s = "http://93.118.34.229/rmip.php?ip=";
+			s+=a.getIp();
+			Profil_Res b = new Profil_Res(s);
+			b.get();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
 		
 			mainWindow.serverCom.setProfileHandler(null);
 			Round round = initRound();

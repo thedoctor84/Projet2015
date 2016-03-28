@@ -1,5 +1,7 @@
 package fr.univavignon.courbes.inter.simpleimpl.remote.client;
 
+import java.io.IOException;
+
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -11,6 +13,7 @@ import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.SettingsManager.NetEngineImpl;
 import fr.univavignon.courbes.inter.simpleimpl.remote.AbstractConnectionPanel;
 import fr.univavignon.courbes.network.ClientCommunication;
+import fr.univavignon.courbes.network.central.Profil_Res;
 import fr.univavignon.courbes.network.kryonet.ClientCommunicationKryonetImpl;
 import fr.univavignon.courbes.network.simpleimpl.client.ClientCommunicationImpl;
 
@@ -42,7 +45,20 @@ public class CentralPanel extends AbstractConnectionPanel implements ClientConne
 		clientCom.setErrorHandler(mainWindow);
 		clientCom.setConnectionHandler(this);
 		
-		String ipStr = ipTextField.getText();
+	
+		
+		Profil_Res a = new Profil_Res("http://93.118.34.229/returnip.php");
+		
+		try
+		{
+			String p = a.get();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+		
+		String ipStr = p;
 		clientCom.setIp(ipStr);
 		SettingsManager.setLastServerIp(ipStr);
 		
