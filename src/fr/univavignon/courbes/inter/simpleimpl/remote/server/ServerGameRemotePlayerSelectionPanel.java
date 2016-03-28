@@ -19,6 +19,7 @@ package fr.univavignon.courbes.inter.simpleimpl.remote.server;
  */
 
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -44,6 +45,7 @@ import fr.univavignon.courbes.inter.simpleimpl.SettingsManager.NetEngineImpl;
 import fr.univavignon.courbes.inter.simpleimpl.remote.RemotePlayerConfigPanel;
 import fr.univavignon.courbes.inter.simpleimpl.remote.RemotePlayerSelectionPanel;
 import fr.univavignon.courbes.network.ServerCommunication;
+import fr.univavignon.courbes.network.central.Profil_Res;
 import fr.univavignon.courbes.network.kryonet.ServerCommunicationKryonetImpl;
 import fr.univavignon.courbes.network.simpleimpl.server.ServerCommunicationImpl;
 
@@ -178,7 +180,12 @@ public class ServerGameRemotePlayerSelectionPanel extends AbstractPlayerSelectio
 	 * Initialise la partie serveur du moteur réseau
 	 */
 	private void initServer()
-	{	NetEngineImpl netEngineImpl = SettingsManager.getNetEngineImpl();
+	{	
+		
+		
+		
+		
+		NetEngineImpl netEngineImpl = SettingsManager.getNetEngineImpl();
 		switch(netEngineImpl)
 		{	case KRYONET:
 				serverCom = new ServerCommunicationKryonetImpl();
@@ -300,7 +307,11 @@ public class ServerGameRemotePlayerSelectionPanel extends AbstractPlayerSelectio
 	@Override
 	protected synchronized void nextStep()
 	{	if(checkConfiguration())
-		{	mainWindow.serverCom.setProfileHandler(null);
+		{	
+		
+		
+		
+			mainWindow.serverCom.setProfileHandler(null);
 			Round round = initRound();
 			mainWindow.currentRound = round;
 			mainWindow.serverCom.sendRound(round);
@@ -327,6 +338,18 @@ public class ServerGameRemotePlayerSelectionPanel extends AbstractPlayerSelectio
 	{	serverCom.closeServer();
 		mainWindow.serverCom = null;
 		mainWindow.displayPanel(PanelName.SERVER_GAME_LOCAL_PLAYER_SELECTION);
+		
+		try{
+			ServerCommunicationImpl a = new ServerCommunicationImpl();
+			String s = "http://93.118.34.229/rmip.php?ip=";
+			s+=a.getIp();
+			Profil_Res b = new Profil_Res(s);
+			b.get();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
 	}
 	
 	/**

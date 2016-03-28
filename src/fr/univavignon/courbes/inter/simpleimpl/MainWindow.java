@@ -37,6 +37,7 @@ import fr.univavignon.courbes.inter.ErrorHandler;
 import fr.univavignon.courbes.inter.simpleimpl.local.LocalGamePlayerSelectionPanel;
 import fr.univavignon.courbes.inter.simpleimpl.local.LocalGameRoundPanel;
 import fr.univavignon.courbes.inter.simpleimpl.profiles.ProfileListPanel;
+import fr.univavignon.courbes.inter.simpleimpl.remote.client.CentralPanel;
 import fr.univavignon.courbes.inter.simpleimpl.remote.client.ClientGamePlayerSelectionPanel;
 import fr.univavignon.courbes.inter.simpleimpl.remote.client.ClientGameRoundPanel;
 import fr.univavignon.courbes.inter.simpleimpl.remote.client.ClientGameServerConnectionPanel;
@@ -47,6 +48,8 @@ import fr.univavignon.courbes.inter.simpleimpl.remote.server.ServerGameRemotePla
 import fr.univavignon.courbes.inter.simpleimpl.remote.server.ServerGameRoundPanel;
 import fr.univavignon.courbes.network.ClientCommunication;
 import fr.univavignon.courbes.network.ServerCommunication;
+import fr.univavignon.courbes.network.central.Profil_Res;
+import fr.univavignon.courbes.network.simpleimpl.server.ServerCommunicationImpl;
 import fr.univavignon.courbes.inter.stats.*;
 /**
  * Menu principal du jeu.
@@ -123,7 +126,21 @@ public class MainWindow extends JFrame implements ErrorHandler, WindowListener
 	 * then close the window.
 	 */
 	public void closeWindow()
-	{	// on tue éventuellement le processus en cours de jeu
+	{	
+		
+		try{
+			ServerCommunicationImpl a = new ServerCommunicationImpl();
+			String s = "http://93.118.34.229/rmip.php?ip=";
+			s+=a.getIp();
+			Profil_Res b = new Profil_Res(s);
+			b.get();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+		
+		// on tue éventuellement le processus en cours de jeu
 		if(currentPanel instanceof LocalGameRoundPanel)
 		{	LocalGameRoundPanel lgrp = (LocalGameRoundPanel)currentPanel;
 			lgrp.stop();
@@ -165,6 +182,8 @@ public class MainWindow extends JFrame implements ErrorHandler, WindowListener
 		CLIENT_GAME_WAIT,
 		/** Aire de jeu d'une partie réseau côté client */
 		CLIENT_GAME_PLAY,
+		/**Connexion grace au serveur central */
+		CLIENT_CENTRAL_CONNECTION,
 		
 		/** Liste des profils */
 		PROFILE_LIST,
@@ -240,6 +259,10 @@ public class MainWindow extends JFrame implements ErrorHandler, WindowListener
 			case GRAPH_STAT:
 				currentPanel = new GraphPanel(this);
 				break;
+				
+				
+			case CLIENT_CENTRAL_CONNECTION:
+				currentPanel = new CentralPanel(this);
 		}
 		
 		updateTitle();

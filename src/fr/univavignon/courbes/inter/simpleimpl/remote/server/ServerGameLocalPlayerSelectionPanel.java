@@ -18,6 +18,10 @@ package fr.univavignon.courbes.inter.simpleimpl.remote.server;
  * along with Courbes. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+
 import javax.swing.JOptionPane;
 
 import fr.univavignon.courbes.common.Constants;
@@ -25,6 +29,10 @@ import fr.univavignon.courbes.common.Round;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.local.AbstractLocalPlayerSelectionPanel;
+import fr.univavignon.courbes.network.ServerCommunication;
+import fr.univavignon.courbes.network.central.Profil_Res;
+import fr.univavignon.courbes.network.simpleimpl.server.ServerCommunicationImpl;
+
 
 /**
  * Panel permettant de sélectionner les joueurs locaux au serveur participant à une partie réseau.
@@ -72,14 +80,30 @@ public class ServerGameLocalPlayerSelectionPanel extends AbstractLocalPlayerSele
 	@Override
 	protected void previousStep()
 	{	mainWindow.displayPanel(PanelName.SERVER_GAME_PORT_SELECTION);
+
 	}
 	
 	@Override
 	protected void nextStep()
 	{	if(checkConfiguration())
-		{	Round round = initRound();
-			mainWindow.currentRound = round;
-			mainWindow.displayPanel(PanelName.SERVER_GAME_REMOTE_PLAYER_SELECTION);
+		{	
+		
+		try{
+			ServerCommunicationImpl a = new ServerCommunicationImpl();
+			String s = "http://93.118.34.229/addip.php?ip=";
+			s+=a.getIp();
+			Profil_Res b = new Profil_Res(s);
+		
+			b.get();
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+		
+		Round round = initRound();
+		mainWindow.currentRound = round;
+		mainWindow.displayPanel(PanelName.SERVER_GAME_REMOTE_PLAYER_SELECTION);
 		}
 		else
 		{	JOptionPane.showMessageDialog(mainWindow, 
