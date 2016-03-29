@@ -19,6 +19,7 @@ package fr.univavignon.courbes.inter.simpleimpl.remote.server;
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
@@ -32,6 +33,7 @@ import fr.univavignon.courbes.inter.simpleimpl.AbstractRoundPanel;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.network.ServerCommunication;
+import fr.univavignon.courbes.stats.EloRankSystem;
 
 /**
  * Panel utilisé pour afficher le jeu proprement dit,
@@ -94,6 +96,9 @@ public class ServerGameRoundPanel extends AbstractRoundPanel implements ServerGa
 		playMatch();
 		
 		// TODO la mise à jour des stats irait ici
+		Player[] players = round.players;
+		Arrays.sort(players);
+		EloRankSystem.majElo(players);	
 		
 		// on repart au menu principal
 		serverCom.closeServer();

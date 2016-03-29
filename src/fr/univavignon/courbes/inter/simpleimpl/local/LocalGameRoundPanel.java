@@ -29,6 +29,7 @@ import fr.univavignon.courbes.inter.simpleimpl.AbstractRoundPanel;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.sounds.Sound_Engine;
+import fr.univavignon.courbes.stats.EloRankSystem;
 
 /**
  * Panel utilisé pour afficher le jeu proprement dit,
@@ -61,6 +62,9 @@ public class LocalGameRoundPanel extends AbstractRoundPanel
 		playMatch();
 		
 		// TODO la mise à jour des stats devrait être faite ici
+		Player[] players = round.players;
+		EloRankSystem.majElo(players);	
+		
 		
 		// on repart au menu principal
 		mainWindow.currentRound = null;
