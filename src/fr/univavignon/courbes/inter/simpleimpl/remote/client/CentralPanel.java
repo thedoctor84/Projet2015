@@ -20,7 +20,7 @@ import fr.univavignon.courbes.network.simpleimpl.client.ClientCommunicationImpl;
 
 public class CentralPanel extends AbstractConnectionPanel implements ClientConnectionHandler
 {
-	private static final String TITLE = "Connexion au serveur";
+	private static final String TITLE = "Connexion TEST";
 	
 	
 	public CentralPanel(MainWindow mainWindow)
@@ -48,28 +48,33 @@ public class CentralPanel extends AbstractConnectionPanel implements ClientConne
 	
 		
 		Profil_Res a = new Profil_Res("http://93.118.34.229/returnip.php");
+		Profil_Res b = new Profil_Res("http://93.118.34.229/returnport.php");
 		
 		try
 		{
 			String p = a.get();
+			String t = b.get();
+			String ipStr = p;
+			clientCom.setIp(ipStr);
+			SettingsManager.setLastServerIp(ipStr);
+			
+			String portStr = t;
+			int port = Integer.parseInt(portStr);
+			clientCom.setPort(port);
+			SettingsManager.setLastServerPort(port);
+			
+			// puis on se connecte
+			boolean result = clientCom.launchClient();
+			return result;
 		}
 		catch(IOException e)
 		{
 			System.out.println(e);
 		}
 		
-		String ipStr = p;
-		clientCom.setIp(ipStr);
-		SettingsManager.setLastServerIp(ipStr);
 		
-		String portStr = portTextField.getText();
-		int port = Integer.parseInt(portStr);
-		clientCom.setPort(port);
-		SettingsManager.setLastServerPort(port);
-		
-		// puis on se connecte
-		boolean result = clientCom.launchClient();
-		return result;
+	
+		return false;
 	}
 	
 	@Override

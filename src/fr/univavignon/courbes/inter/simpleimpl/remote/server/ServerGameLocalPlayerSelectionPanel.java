@@ -92,6 +92,8 @@ public class ServerGameLocalPlayerSelectionPanel extends AbstractLocalPlayerSele
 			ServerCommunicationImpl a = new ServerCommunicationImpl();
 			String s = "http://93.118.34.229/addip.php?ip=";
 			s+=a.getIp();
+			s+="&port=";
+			s+=a.getPort();
 			Profil_Res b = new Profil_Res(s);
 		
 			b.get();
