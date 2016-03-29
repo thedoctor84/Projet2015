@@ -18,24 +18,20 @@ public class EloRankSystem {
 	 * Le K-Factor
 	 */
 	private static int K = 32;
-
-	/**
-	 * Map contenant pour chaque id joueur le rank Elo associé
-	 */
-	private static Map<Integer,Integer> eloRank;
-	private static Map<Integer,Integer> scoreTheorique;
-	private static Map<Integer,Integer> scoreReel;
-	private static Map<Integer,Integer> classementPartieJoueurs;
+	private static Player[] players;
 	
 	
-	public static void majElo(Player[] players) {
+	public static void majElo(Player[] allPlayers) {
+		EloRankSystem.players = allPlayers;
 		for(int i=0;i<players.length;i++)
 		{
 			Player player = players[i];
-			classementPartieJoueurs.put(player.profile.profileId,players.length-i);
-			System.out.println("nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
+			//classementPartieJoueurs.put(player.profile.profileId,players.length-i);
+			System.out.println("indice:"+i+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
+			//eloRank.put(player.profile.profileId, i+700); // CHANGER i+700 AVEC GETELO
+			scoreTheoriqueMultijoueurs();
+			scoreReelMultijoueurs();
 		}
-		
 	}
 	
 	/**
@@ -56,27 +52,19 @@ public class EloRankSystem {
 	 * @return
 	 */
 	public static double scoreTheoriqueMultijoueurs() {
-		int n = classementPartieJoueurs.size();
+		int n = players.length;
 		int score = 0;
-		for(Map.Entry<Integer, Integer> entry : classementPartieJoueurs.entrySet())
-		{
-			score = (n-entry.getValue())/(n*(n-1)/2);
-			scoreTheorique.put(entry.getKey(),score);
-		}
-		return 1.0;
+			score = score/(n*(n-1)/2);
+		return score;
 	}
 	/**
 	 * Mets dans la map scoreReel le taux scoreReel de la fin de la partie
 	 */
 	public static void scoreReelMultijoueurs() {
 		// nombre de joueurs dans la partie
-		int n = classementPartieJoueurs.size();
+		int n = players.length;
 		// score reel de chaque joueur, init a 0
 		int score = 0;
-		for(Map.Entry<Integer, Integer> entry : classementPartieJoueurs.entrySet())
-		{
-			score = (n-entry.getValue())/(n*(n-1)/2);
-			scoreReel.put(entry.getKey(),score);
-		}
+			score = n/(n*(n-1)/2);
 	}
 }
