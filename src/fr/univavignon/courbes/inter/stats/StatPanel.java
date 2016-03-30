@@ -36,6 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.ListSelectionModel;
 
 import fr.univavignon.courbes.common.Profile;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
@@ -57,6 +58,8 @@ public class StatPanel extends JPanel implements ActionListener
 	private static final String DEFAULT_MDP = "Mot de passe";
 	/** Email par defaut pour le champ email */
 	private static final String DEFAULT_MAIL = "Email";
+	
+	private int row;
 	
 	
 	public StatPanel(MainWindow mainWindow)
@@ -91,7 +94,7 @@ public class StatPanel extends JPanel implements ActionListener
 	private void initTablePanel()
 	{	playerTable = new JTable();
 		playerTable.setAutoCreateRowSorter(true);
-		
+		playerTable.setSelectionModel(new ForcedListSelectionModel());
 		playerTable.setModel(new ProfileTableModel(1));
 		
 		scrollPane = new JScrollPane
@@ -139,8 +142,8 @@ public class StatPanel extends JPanel implements ActionListener
 			mainWindow.displayPanel(PanelName.MAIN_MENU);
 	
 		if(e.getSource()==statButton)
-			mainWindow.displayPanel(PanelName.GRAPH_STAT);
+			this.row = playerTable.getSelectedRow();
+			String test = (String) playerTable.getValueAt( row, 0 );
+			mainWindow.displayPanel(PanelName.GRAPH_STAT, test);
 	}
-	
-	
 }

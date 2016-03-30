@@ -3,6 +3,7 @@ package fr.univavignon.courbes.stats;
 import java.util.Map;
 
 import fr.univavignon.courbes.common.Player;
+import fr.univavignon.courbes.network.central.Profil_Res;
 
 /**
  * @author antoine
@@ -86,14 +87,28 @@ public class EloRankSystem {
 	 * Adaptation du système Elo
 	 * @return
 	 */
+	
+	/*public static int getElo(String Pseudo)
+	{
+		Profil_Res joueur = new Profil_Res("http://93.118.34.229//returnelo.php?pseudo=");
+		
+	}*/
 	public static void scoreTheoriqueMultijoueurs() {
 		int n = players.length;
+		
+		String pseudo="";
 		scoreTheoriquePlayers = new double[n];
 		double score = 0;
 		for(int i=0; i < n; i++)
 		{
+			//pseudo=players.
 			for(int j=0; j < n; j++)
 			{
+				if(i!=j)
+				{
+					//pseudo=
+					score = score ;
+				}
 				
 			}
 			score = 5.0;

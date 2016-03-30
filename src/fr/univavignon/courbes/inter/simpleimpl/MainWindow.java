@@ -255,16 +255,27 @@ public class MainWindow extends JFrame implements ErrorHandler, WindowListener
 			case STATISTICS:
 				currentPanel = new StatPanel(this);
 				break;
-				
-			case GRAPH_STAT:
-				currentPanel = new GraphPanel(this);
-				break;
-				
+								
 				
 			case CLIENT_CENTRAL_CONNECTION:
 				currentPanel = new CentralPanel(this);
 		}
 		
+		updateTitle();
+		getContentPane().add(currentPanel);
+		validate();
+		repaint();		
+	}
+	
+	public void displayPanel(PanelName panelName, String player)
+	{	getContentPane().remove(currentPanel);
+		switch(panelName)
+		{
+				
+			case GRAPH_STAT:
+				currentPanel = new GraphPanel(this, player);
+				break;
+		}
 		updateTitle();
 		getContentPane().add(currentPanel);
 		validate();
