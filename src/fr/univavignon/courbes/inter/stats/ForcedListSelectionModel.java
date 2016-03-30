@@ -5,7 +5,12 @@ import javax.swing.ListSelectionModel;
 
 public class ForcedListSelectionModel extends DefaultListSelectionModel {
 
-    public ForcedListSelectionModel () {
+    /**
+	 * serialUID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ForcedListSelectionModel () {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 

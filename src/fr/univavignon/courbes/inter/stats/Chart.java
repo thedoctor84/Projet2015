@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 
 public class Chart extends JPanel {
 
+	/**
+	 * serialUID
+	 */
+	private static final long serialVersionUID = 1L;
 	private String player;
 	private String stat;
 	

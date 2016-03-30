@@ -24,12 +24,10 @@ import java.util.TreeSet;
 
 import javax.swing.table.AbstractTableModel;
 import fr.univavignon.courbes.common.Profile;
-import fr.univavignon.courbes.network.central.*;
 import fr.univavignon.courbes.stats.GetStat;
 
 import java.util.Vector;
 import java.io.*;
-import java.util.Vector;
 /**
  * Modèle associé à la table affichant la liste des profils
  * (i.e. objet chargé de gérer le contenu la table concernée).

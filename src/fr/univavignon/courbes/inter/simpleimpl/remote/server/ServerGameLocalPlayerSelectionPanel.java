@@ -19,8 +19,6 @@ package fr.univavignon.courbes.inter.simpleimpl.remote.server;
  */
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
 
 import javax.swing.JOptionPane;
 
@@ -29,7 +27,6 @@ import fr.univavignon.courbes.common.Round;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.local.AbstractLocalPlayerSelectionPanel;
-import fr.univavignon.courbes.network.ServerCommunication;
 import fr.univavignon.courbes.network.central.ProfilRes;
 import fr.univavignon.courbes.network.simpleimpl.server.ServerCommunicationImpl;
 

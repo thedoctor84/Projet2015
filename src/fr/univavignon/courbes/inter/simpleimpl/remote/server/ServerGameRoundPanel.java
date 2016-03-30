@@ -19,7 +19,6 @@ package fr.univavignon.courbes.inter.simpleimpl.remote.server;
  */
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.SwingUtilities;

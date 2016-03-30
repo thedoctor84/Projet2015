@@ -22,7 +22,6 @@ import java.awt.Dimension;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -35,10 +34,8 @@ import fr.univavignon.courbes.inter.simpleimpl.SettingsManager.NetEngineImpl;
 import fr.univavignon.courbes.inter.simpleimpl.SettingsManager;
 import fr.univavignon.courbes.inter.simpleimpl.remote.AbstractConnectionPanel;
 import fr.univavignon.courbes.network.ServerCommunication;
-import fr.univavignon.courbes.network.central.ProfilRes;
 import fr.univavignon.courbes.network.kryonet.ServerCommunicationKryonetImpl;
 import fr.univavignon.courbes.network.simpleimpl.server.ServerCommunicationImpl;
-import fr.univavignon.courbes.network.central.*;
 /**
  * Classe permettant à l'utilisateur de spécifier les information de connexion
  * au serveur, pour configurer une partie réseau.

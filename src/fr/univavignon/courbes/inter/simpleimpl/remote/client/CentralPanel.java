@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import fr.univavignon.courbes.inter.ClientConnectionHandler;
-import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.SettingsManager;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.SettingsManager.NetEngineImpl;
@@ -20,6 +19,10 @@ import fr.univavignon.courbes.network.simpleimpl.client.ClientCommunicationImpl;
 
 public class CentralPanel extends AbstractConnectionPanel implements ClientConnectionHandler
 {
+	/**
+	 * serialUID
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String TITLE = "Connexion TEST";
 	
 	

@@ -29,7 +29,6 @@ import fr.univavignon.courbes.inter.simpleimpl.AbstractRoundPanel;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.sounds.SoundEngine;
-import fr.univavignon.courbes.stats.EloRankSystem;
 
 /**
  * Panel utilisé pour afficher le jeu proprement dit,

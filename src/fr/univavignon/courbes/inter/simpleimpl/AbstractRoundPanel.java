@@ -18,7 +18,7 @@ package fr.univavignon.courbes.inter.simpleimpl;
  * along with Courbes. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.io.IOException;
+
 import java.util.Arrays;
 
 import java.util.List;
@@ -38,11 +38,9 @@ import fr.univavignon.courbes.graphics.GraphicDisplay;
 import fr.univavignon.courbes.graphics.simpleimpl.GraphicDisplayImpl;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.local.KeyManager;
-import fr.univavignon.courbes.network.central.ProfilRes;
 import fr.univavignon.courbes.physics.PhysicsEngine;
 import fr.univavignon.courbes.physics.simpleimpl.PhysicsEngineImpl;
 import fr.univavignon.courbes.sounds.*;
-import fr.univavignon.courbes.network.central.*;
 /**
  * Panel utilisé pour afficher le jeu proprement dit,
  * i.e. le panel de l'aire de jeu et celui des scores.
@@ -168,7 +166,7 @@ public abstract class AbstractRoundPanel extends JPanel implements Runnable
 			{		
 				Profile profile = players[maxIdx].profile;
 				String name = profile.userName;
-				JOptionPane.showMessageDialog(mainWindow, "Le joueur "+name+"a gagné la partie !");
+				JOptionPane.showMessageDialog(mainWindow, "Le joueur "+name+" a gagné la partie !");
 				return name;
 			}
 			
