@@ -391,7 +391,7 @@ public class PhysSnake extends Snake
 					|| pos.x>=boardWidth-Constants.BORDER_THICKNESS)
 				{	// on marque la collision
 					eliminatedBy = -1;
-					Sound_Engine a = new Sound_Engine();
+					SoundEngine a = new SoundEngine();
 					a.playDeath();
 					result = true;
 					// on restreint la nouvelle position du serpent
@@ -410,7 +410,7 @@ public class PhysSnake extends Snake
 						|| physicalTrail.removeAll(snake.newTrail);
 					if(changed)
 					{
-						Sound_Engine a = new Sound_Engine();
+						SoundEngine a = new SoundEngine();
 						a.playDeath();
 						eliminatedBy = i;
 						result = true;

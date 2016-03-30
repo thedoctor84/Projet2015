@@ -8,7 +8,7 @@ import fr.univavignon.courbes.network.central.*;
  * On recupère les stats des joueurs
  *
  */
-public class GetStat extends Profil_Res
+public class GetStat extends ProfilRes
 {
 	/**
 	 * Recupere les stats du serveur central

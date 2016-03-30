@@ -28,7 +28,7 @@ import fr.univavignon.courbes.common.Player;
 import fr.univavignon.courbes.inter.simpleimpl.AbstractRoundPanel;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
-import fr.univavignon.courbes.sounds.Sound_Engine;
+import fr.univavignon.courbes.sounds.SoundEngine;
 import fr.univavignon.courbes.stats.EloRankSystem;
 
 /**
@@ -56,7 +56,7 @@ public class LocalGameRoundPanel extends AbstractRoundPanel
 	public void run()
 	{	
 		
-		Sound_Engine a = new Sound_Engine();
+		SoundEngine a = new SoundEngine();
 		a.playBack();
 		
 		playMatch();

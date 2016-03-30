@@ -13,7 +13,7 @@ import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.SettingsManager.NetEngineImpl;
 import fr.univavignon.courbes.inter.simpleimpl.remote.AbstractConnectionPanel;
 import fr.univavignon.courbes.network.ClientCommunication;
-import fr.univavignon.courbes.network.central.Profil_Res;
+import fr.univavignon.courbes.network.central.ProfilRes;
 import fr.univavignon.courbes.network.kryonet.ClientCommunicationKryonetImpl;
 import fr.univavignon.courbes.network.simpleimpl.client.ClientCommunicationImpl;
 
@@ -47,8 +47,8 @@ public class CentralPanel extends AbstractConnectionPanel implements ClientConne
 		
 	
 		
-		Profil_Res a = new Profil_Res("http://93.118.34.229/returnip.php");
-		Profil_Res b = new Profil_Res("http://93.118.34.229/returnport.php");
+		ProfilRes a = new ProfilRes("http://93.118.34.229/returnip.php");
+		ProfilRes b = new ProfilRes("http://93.118.34.229/returnport.php");
 		
 		try
 		{

@@ -38,7 +38,7 @@ import fr.univavignon.courbes.graphics.GraphicDisplay;
 import fr.univavignon.courbes.graphics.simpleimpl.GraphicDisplayImpl;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.local.KeyManager;
-import fr.univavignon.courbes.network.central.Profil_Res;
+import fr.univavignon.courbes.network.central.ProfilRes;
 import fr.univavignon.courbes.physics.PhysicsEngine;
 import fr.univavignon.courbes.physics.simpleimpl.PhysicsEngineImpl;
 import fr.univavignon.courbes.sounds.*;
@@ -176,7 +176,7 @@ public abstract class AbstractRoundPanel extends JPanel implements Runnable
 			else
 			{	
 				
-				Sound_Engine b = new Sound_Engine();
+				SoundEngine b = new SoundEngine();
 				b.playWin();
 		
 				int maxIdx2 = 0;

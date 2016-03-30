@@ -25,7 +25,7 @@ import fr.univavignon.courbes.common.Direction;
 import fr.univavignon.courbes.common.SmallUpdate;
 import fr.univavignon.courbes.common.UpdateInterface;
 import fr.univavignon.courbes.physics.PhysicsEngine;
-import fr.univavignon.courbes.sounds.Sound_Engine;
+import fr.univavignon.courbes.sounds.SoundEngine;
 
 /**
  * Immplémentation de l'interface {@link PhysicsEngine}, i.e.

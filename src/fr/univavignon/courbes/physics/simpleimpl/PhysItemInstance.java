@@ -40,7 +40,7 @@ public class PhysItemInstance extends ItemInstance
 	/** Générateur aléatoire utilisé lors de l'apparition d'items */
 	private static final Random RANDOM = new Random();
 	
-	Sound_Engine a = new Sound_Engine();
+	SoundEngine a = new SoundEngine();
 	
 	/**
 	 * Crée un item placé à la position spécifiée.

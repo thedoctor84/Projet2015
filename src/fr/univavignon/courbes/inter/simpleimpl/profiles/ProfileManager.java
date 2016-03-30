@@ -58,7 +58,7 @@ public class ProfileManager
 	{	
 		try{
 			
-			Profil_Res co = new Profil_Res("http://93.118.34.229/");
+			ProfilRes co = new ProfilRes("http://93.118.34.229/");
 			String temp="";
 			
 			temp = co.get();
@@ -117,7 +117,7 @@ public class ProfileManager
 			a+=profile.email;
 			a+="&pays=";
 			a+=profile.country;
-			Profil_Res co = new Profil_Res(a);
+			ProfilRes co = new ProfilRes(a);
 			co.get();
 		}
 		catch(IOException e)
@@ -148,7 +148,7 @@ public class ProfileManager
 		{
 			String a = "http://93.118.34.229/sup.php?name=";
 			a+=profile.userName;
-			Profil_Res co = new Profil_Res(a);
+			ProfilRes co = new ProfilRes(a);
 			co.get();
 		}
 		catch(IOException e)

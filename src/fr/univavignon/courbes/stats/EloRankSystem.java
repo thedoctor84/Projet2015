@@ -3,7 +3,7 @@ package fr.univavignon.courbes.stats;
 import java.io.IOException;
 
 import fr.univavignon.courbes.common.Player;
-import fr.univavignon.courbes.network.central.Profil_Res;
+import fr.univavignon.courbes.network.central.ProfilRes;
 
 /**
  * @author antoine
@@ -16,13 +16,31 @@ public class EloRankSystem {
 	 * Le K-Factor
 	 */
 	private static int K = 32;
+	/**
+	 * Tableau de Joueurs, qui sera ordonné par score décroissant pour déterminer le classement
+	 */
 	private static Player[] players;
+	
+	/**
+	 * Tableau d'entiers, contenant les classements Elo des joueurs (même ordre que le tableau players)
+	 */
 	private static int[] eloRankPlayers;
+	/**
+	 * Tableau de doubles contenant le score réel des joueurs (de 0 à 1)
+	 */
 	private static double[] scoreReelPlayers;
+	/**
+	 * Tableau de doubles contenant le score théorique des joueurs (de 0 à 1) en fonction de son classement
+	 */
 	private static double[] scoreTheoriquePlayers;
 	
 	
 	
+	/**
+	 * Mets a jour le classement des joueurs qui était dans la partie
+	 * @param allPlayers
+	 * On récupère le tableau des Joueurs (class Player) en fonction de leur playerId
+	 */
 	public static void majElo(Player[] allPlayers) {
 		players = new Player[allPlayers.length];
 		players = allPlayers;
@@ -58,16 +76,19 @@ public class EloRankSystem {
 			System.out.println("Tableau scoreTheoriquePlayers : Length :"+scoreTheoriquePlayers.length+"indice:"+k+",score: "+scoreTheoriquePlayers[k]);
 		}
 	}
+	/**
+	 * Calcule le nouveau classement Elo de chaque joueur
+	 */
 	public static void NewElo()
 	{
 		String url ="";
-		Profil_Res joueur;
+		ProfilRes joueur;
 		int nouvelElo = 0;
 		for(int i=0; i<eloRankPlayers.length;i++)
 		{
 			nouvelElo = (int)(eloRankPlayers[i]+K*(scoreReelPlayers[i]-scoreTheoriquePlayers[i]));
 			url="http://93.118.34.229/addelo.php?pseudo="+players[i].profile.userName+"&elo="+nouvelElo;
-			joueur = new Profil_Res(url);
+			joueur = new ProfilRes(url);
 			try {
 				joueur.get();
 			} catch (IOException e) {
@@ -90,7 +111,7 @@ public class EloRankSystem {
 		String url ="http://93.118.34.229/returnelo.php?pseudo="+Pseudo;
 		String eloString="";
 		int elo = 0;
-		Profil_Res joueur = new Profil_Res(url);
+		ProfilRes joueur = new ProfilRes(url);
 		try {
 			eloString = joueur.get();
 			elo = Integer.parseInt(eloString);

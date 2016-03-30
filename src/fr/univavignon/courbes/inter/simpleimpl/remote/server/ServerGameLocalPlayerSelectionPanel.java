@@ -30,7 +30,7 @@ import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.local.AbstractLocalPlayerSelectionPanel;
 import fr.univavignon.courbes.network.ServerCommunication;
-import fr.univavignon.courbes.network.central.Profil_Res;
+import fr.univavignon.courbes.network.central.ProfilRes;
 import fr.univavignon.courbes.network.simpleimpl.server.ServerCommunicationImpl;
 
 
@@ -94,7 +94,7 @@ public class ServerGameLocalPlayerSelectionPanel extends AbstractLocalPlayerSele
 			s+=a.getIp();
 			s+="&port=";
 			s+=a.getPort();
-			Profil_Res b = new Profil_Res(s);
+			ProfilRes b = new ProfilRes(s);
 		
 			b.get();
 		}

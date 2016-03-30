@@ -37,8 +37,8 @@ import fr.univavignon.courbes.inter.simpleimpl.MainWindow;
 import fr.univavignon.courbes.inter.simpleimpl.MainWindow.PanelName;
 import fr.univavignon.courbes.inter.simpleimpl.local.KeyManager;
 import fr.univavignon.courbes.network.ClientCommunication;
-import fr.univavignon.courbes.network.central.Profil_Res;
-import fr.univavignon.courbes.sounds.Sound_Engine;
+import fr.univavignon.courbes.network.central.ProfilRes;
+import fr.univavignon.courbes.sounds.SoundEngine;
 
 /**
  * Panel utilisé pour afficher le jeu proprement dit,
@@ -95,7 +95,7 @@ public class ClientGameRoundPanel extends AbstractRoundPanel implements ClientGa
 	public void run()
 	{	// on joue la partie (i.e. plusieurs manches)
 		
-		Sound_Engine d = new Sound_Engine();
+		SoundEngine d = new SoundEngine();
 		d.playBack();
 		String name = playMatch();
 		
@@ -108,7 +108,7 @@ public class ClientGameRoundPanel extends AbstractRoundPanel implements ClientGa
 				{
 					String a = "http://93.118.34.229/addone.php?name=";
 					a+=name;
-					Profil_Res co = new Profil_Res(a);
+					ProfilRes co = new ProfilRes(a);
 					co.get();
 				}
 				catch(IOException e)
@@ -123,7 +123,7 @@ public class ClientGameRoundPanel extends AbstractRoundPanel implements ClientGa
 				{
 					String a = "http://93.118.34.229/addloose.php?name=";
 					a+=round.players[u].profile.userName;
-					Profil_Res co = new Profil_Res(a);
+					ProfilRes co = new ProfilRes(a);
 					co.get();
 				}
 				catch(IOException e)
