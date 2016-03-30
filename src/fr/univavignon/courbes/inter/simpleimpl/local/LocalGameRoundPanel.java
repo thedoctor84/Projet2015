@@ -61,11 +61,6 @@ public class LocalGameRoundPanel extends AbstractRoundPanel
 		
 		playMatch();
 		
-		// TODO la mise à jour des stats devrait être faite ici
-		Player[] players = round.players;
-		EloRankSystem.majElo(players);	
-		
-		
 		// on repart au menu principal
 		mainWindow.currentRound = null;
 		mainWindow.displayPanel(PanelName.MAIN_MENU);

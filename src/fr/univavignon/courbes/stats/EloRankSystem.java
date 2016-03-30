@@ -1,7 +1,6 @@
 package fr.univavignon.courbes.stats;
 
 import java.io.IOException;
-import java.util.Map;
 
 import fr.univavignon.courbes.common.Player;
 import fr.univavignon.courbes.network.central.Profil_Res;
@@ -12,9 +11,6 @@ import fr.univavignon.courbes.network.central.Profil_Res;
  * C'est une version adaptée pour le multijoueurs
  */
 public class EloRankSystem {
-	// http://setastyle.free.fr/chess/elo.php
-	// http://gobase.org/studying/articles/elo/
-	// http://sradack.blogspot.fr/2008/06/elo-rating-system-multiple-players.html
 
 	/**
 	 * Le K-Factor
@@ -43,18 +39,11 @@ public class EloRankSystem {
 				}
 			}
 		}
-		for(int k=0;k<players.length;k++)
-		{
-			Player player = players[k];
-			//classementPartieJoueurs.put(player.profile.profileId,players.length-i);
-			System.out.println("Apres echange : indice:"+k+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
-			//eloRank.put(player.profile.profileId, i+700); // CHANGER i+700 AVEC GETELO
-		}
 		getEloPlayers();
 		scoreTheoriqueMultijoueurs();
 		scoreReelMultijoueurs();
 		NewElo();
-		affiche();
+		//affiche();
 	}
 	/**
 	 * Affiche les valeurs des tableaux (
@@ -79,8 +68,14 @@ public class EloRankSystem {
 			nouvelElo = (int)(eloRankPlayers[i]+K*(scoreReelPlayers[i]-scoreTheoriquePlayers[i]));
 			url="http://93.118.34.229/addelo.php?pseudo="+players[i].profile.userName+"&elo="+nouvelElo;
 			joueur = new Profil_Res(url);
-			System.out.println("Ancien elo de "+players[i].profile.userName+" = "+eloRankPlayers[i]);
-			System.out.println("Nouvel elo de "+players[i].profile.userName+" = "+nouvelElo);
+			try {
+				joueur.get();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//System.out.println("Ancien elo de "+players[i].profile.userName+" = "+eloRankPlayers[i]);
+			//System.out.println("Nouvel elo de "+players[i].profile.userName+" = "+nouvelElo);
 		}
 	}
 	
@@ -144,7 +139,7 @@ public class EloRankSystem {
 			{
 				if(i!=j)
 				{
-					score = score+scoreTheorique2Joueurs(eloRankPlayers[i],eloRankPlayers[j]) ;
+					score = score+scoreTheorique2Joueurs(eloRankPlayers[j],eloRankPlayers[i]) ;
 				}
 			}
 			score = score/(double)(n*(n-1)/2);
