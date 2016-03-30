@@ -34,7 +34,7 @@ public class ProfilRes
 		return source;
 	}
 
-	public Vector<String> coupe_chaine(String s)
+	public Vector<String> coupeChaine(String s)
 	{
 		Vector<String> a = new Vector<String>();
 

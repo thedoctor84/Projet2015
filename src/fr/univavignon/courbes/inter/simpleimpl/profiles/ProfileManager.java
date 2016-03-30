@@ -63,7 +63,7 @@ public class ProfileManager
 			
 			temp = co.get();
 			Vector<String> t;
-			t = co.coupe_chaine(temp);
+			t = co.coupeChaine(temp);
 			
 			FileWriter fichier = new FileWriter("res/profiles/profiles.txt",false);
 			BufferedWriter output = new BufferedWriter(fichier);

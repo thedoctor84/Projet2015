@@ -84,7 +84,7 @@ public class ProfileTableModel extends AbstractTableModel
 
 			if(z != null)
 			{
-				Vector<String> c = b.coupe_chaine(z);
+				Vector<String> c = b.coupeChaine(z);
 				int i = 0;
 
 			
