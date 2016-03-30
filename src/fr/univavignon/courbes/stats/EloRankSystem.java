@@ -19,21 +19,28 @@ public class EloRankSystem {
 	 */
 	private static int K = 32;
 	private static Player[] players;
-	private static int[] scoreReelPlayers;
-	private static int[] scoreTheoriquePlayers;
+	private static double[] scoreReelPlayers;
+	private static double[] scoreTheoriquePlayers;
 	
 	
 	public static void majElo(Player[] allPlayers) {
-		EloRankSystem.players = allPlayers;
+		players = new Player[allPlayers.length];
+		players = allPlayers;
+		for(int k=0;k<players.length;k++)
+		{
+			System.out.println("AVANT echange : indice:"+k+",nom : "+players[k].profile.userName+", score :"+players[k].totalScore+", playerId :"+players[k].playerId);
+		}
 		for(int i=players.length-1;i>=1;i--)
 		{
-			for(int j=0;j<i-1;j++)
+			for(int j=0;j<=i-1;j++)
 			{
 				if(players[j].totalScore < players[j+1].totalScore)
 				{
+					System.out.println("Score de "+j+" :"+players[j].totalScore);
 					Player tmp = players[j+1];
 					players[j+1] = players[j];
 					players[j] = tmp;
+					System.out.println("Score de "+j+" apres echange:"+players[j].totalScore);
 				}
 			}
 		}
@@ -41,13 +48,22 @@ public class EloRankSystem {
 		{
 			Player player = players[k];
 			//classementPartieJoueurs.put(player.profile.profileId,players.length-i);
-			System.out.println("indice:"+k+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
+			System.out.println("Apres echange : indice:"+k+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
 			//eloRank.put(player.profile.profileId, i+700); // CHANGER i+700 AVEC GETELO
 			scoreTheoriqueMultijoueurs();
 			scoreReelMultijoueurs();
 		}
+		Affiche();
 	}
-	
+	public static void Affiche()
+	{
+		for(int k=0;k<players.length;k++)
+		{
+			System.out.println("Tableau players : Length :"+players.length+"indice:"+k+",nom : "+players[k].profile.userName+", score :"+players[k].totalScore+", playerId :"+players[k].playerId);
+			System.out.println("Tableau scoreReelPlayers : Length :"+scoreReelPlayers.length+"indice:"+k+",score: "+scoreReelPlayers[k]);
+			System.out.println("Tableau scoreTheoriquePlayers : Length :"+scoreTheoriquePlayers.length+"indice:"+k+",score: "+scoreTheoriquePlayers[k]);
+		}
+	}
 	/*public static NewElo(int profileID)
 	{
 		int nouvelElo = getElo(profileID)+K*()
@@ -72,14 +88,15 @@ public class EloRankSystem {
 	 */
 	public static void scoreTheoriqueMultijoueurs() {
 		int n = players.length;
-		int score = 0;
-		for(int i=0; i < players.length; i++)
+		scoreTheoriquePlayers = new double[n];
+		double score = 0;
+		for(int i=0; i < n; i++)
 		{
-			for(int j=0; j < players.length; j++)
+			for(int j=0; j < n; j++)
 			{
 				
 			}
-			score = score/(n*(n-1)/2);
+			score = 5.0;
 			scoreTheoriquePlayers[i] = score;
 			
 		}
@@ -90,10 +107,13 @@ public class EloRankSystem {
 	public static void scoreReelMultijoueurs() {
 		// nombre de joueurs dans la partie
 		int n = players.length;
-		int score = 0;
-		for(int i=0; i < players.length; i++)
+		scoreReelPlayers = new double[n];
+		double score = 0;
+		for(int i=0; i < n; i++)
 		{
-			score=(n-(i+1))/(n*(n-1)/2);
+			System.out.println("coucou scorereel");
+			score=(double)(n-(i+1))/(double)(n*(n-1)/2);
+			System.out.println("score calcule:"+score);
 			scoreReelPlayers[i] = score;
 		}
 	}
