@@ -97,7 +97,6 @@ public class ServerGameRoundPanel extends AbstractRoundPanel implements ServerGa
 		
 		// TODO la mise à jour des stats irait ici
 		Player[] players = round.players;
-		Arrays.sort(players);
 		EloRankSystem.majElo(players);	
 		
 		// on repart au menu principal

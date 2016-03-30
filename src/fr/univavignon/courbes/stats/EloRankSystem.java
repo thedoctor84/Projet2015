@@ -19,20 +19,38 @@ public class EloRankSystem {
 	 */
 	private static int K = 32;
 	private static Player[] players;
+	private static int[] scoreReelPlayers;
 	
 	
 	public static void majElo(Player[] allPlayers) {
 		EloRankSystem.players = allPlayers;
-		for(int i=0;i<players.length;i++)
+		for(int i=players.length-1;i>=1;i--)
 		{
-			Player player = players[i];
+			for(int j=0;j<i-1;j++)
+			{
+				if(players[j].totalScore < players[j+1].totalScore)
+				{
+					Player tmp = players[j+1];
+					players[j+1] = players[j];
+					players[j] = tmp;
+				}
+			}
+		}
+		for(int k=0;k<players.length;k++)
+		{
+			Player player = players[k];
 			//classementPartieJoueurs.put(player.profile.profileId,players.length-i);
-			System.out.println("indice:"+i+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
+			System.out.println("indice:"+k+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
 			//eloRank.put(player.profile.profileId, i+700); // CHANGER i+700 AVEC GETELO
 			scoreTheoriqueMultijoueurs();
 			scoreReelMultijoueurs();
 		}
 	}
+	
+	/*public static NewElo(int profileID)
+	{
+		int nouvelElo = getElo(profileID)+K*()
+	}/
 	
 	/**
 	 * 
@@ -51,11 +69,11 @@ public class EloRankSystem {
 	 * Adaptation du système Elo
 	 * @return
 	 */
-	public static double scoreTheoriqueMultijoueurs() {
+	public static void scoreTheoriqueMultijoueurs() {
 		int n = players.length;
 		int score = 0;
 			score = score/(n*(n-1)/2);
-		return score;
+		//return score;
 	}
 	/**
 	 * Mets dans la map scoreReel le taux scoreReel de la fin de la partie
@@ -63,8 +81,11 @@ public class EloRankSystem {
 	public static void scoreReelMultijoueurs() {
 		// nombre de joueurs dans la partie
 		int n = players.length;
-		// score reel de chaque joueur, init a 0
 		int score = 0;
-			score = n/(n*(n-1)/2);
+		for(int i=0; i < players.length; i++)
+		{
+			score=(n-(i+1))/(n*(n-1)/2);
+			scoreReelPlayers[i] = score;
+		}
 	}
 }
