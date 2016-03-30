@@ -71,16 +71,18 @@ public class EloRankSystem {
 	}
 	public static void NewElo()
 	{
+		String url ="";
+		Profil_Res joueur;
 		int nouvelElo = 0;
 		for(int i=0; i<eloRankPlayers.length;i++)
 		{
 			nouvelElo = (int)(eloRankPlayers[i]+K*(scoreReelPlayers[i]-scoreTheoriquePlayers[i]));
+			url="http://93.118.34.229/addelo.php?pseudo="+players[i].profile.userName+"&elo="+nouvelElo;
+			joueur = new Profil_Res(url);
 			System.out.println("Ancien elo de "+players[i].profile.userName+" = "+eloRankPlayers[i]);
 			System.out.println("Nouvel elo de "+players[i].profile.userName+" = "+nouvelElo);
 		}
-		
 	}
-	
 	
 	/**
 	 * @param Pseudo
@@ -90,7 +92,7 @@ public class EloRankSystem {
 	 */
 	public static int getElo(String Pseudo)
 	{
-		String url ="http://93.118.34.229//returnelo.php?pseudo="+Pseudo;
+		String url ="http://93.118.34.229/returnelo.php?pseudo="+Pseudo;
 		String eloString="";
 		int elo = 0;
 		Profil_Res joueur = new Profil_Res(url);
