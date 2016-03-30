@@ -2,6 +2,8 @@ package fr.univavignon.courbes.stats;
 
 import java.util.Map;
 
+import fr.univavignon.courbes.common.Player;
+
 /**
  * @author antoine
  * La classe EloRankSystem sert pour le calcul du classement des joueurs
@@ -10,18 +12,27 @@ import java.util.Map;
 public class EloRankSystem {
 	// http://setastyle.free.fr/chess/elo.php
 	// http://gobase.org/studying/articles/elo/
-	
+	// http://sradack.blogspot.fr/2008/06/elo-rating-system-multiple-players.html
 
 	/**
 	 * Le K-Factor
 	 */
 	private static int K = 32;
-
-	/**
-	 * Map contenant pour chaque id joueur le rank Elo associé
-	 */
-	private static Map<Integer,Integer> eloRank;
-
+	private static Player[] players;
+	
+	
+	public static void majElo(Player[] allPlayers) {
+		EloRankSystem.players = allPlayers;
+		for(int i=0;i<players.length;i++)
+		{
+			Player player = players[i];
+			//classementPartieJoueurs.put(player.profile.profileId,players.length-i);
+			System.out.println("indice:"+i+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
+			//eloRank.put(player.profile.profileId, i+700); // CHANGER i+700 AVEC GETELO
+			scoreTheoriqueMultijoueurs();
+			scoreReelMultijoueurs();
+		}
+	}
 	
 	/**
 	 * 
@@ -40,8 +51,20 @@ public class EloRankSystem {
 	 * Adaptation du système Elo
 	 * @return
 	 */
-	public static double scoreTheoriqueMultijoueurs(int playerID) {
-		
-		return 1.0;
+	public static double scoreTheoriqueMultijoueurs() {
+		int n = players.length;
+		int score = 0;
+			score = score/(n*(n-1)/2);
+		return score;
+	}
+	/**
+	 * Mets dans la map scoreReel le taux scoreReel de la fin de la partie
+	 */
+	public static void scoreReelMultijoueurs() {
+		// nombre de joueurs dans la partie
+		int n = players.length;
+		// score reel de chaque joueur, init a 0
+		int score = 0;
+			score = n/(n*(n-1)/2);
 	}
 }
