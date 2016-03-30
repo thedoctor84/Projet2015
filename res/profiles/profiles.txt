@@ -1,5 +1,5 @@
-echterelion,espagne,12,fake@fake.fake,edf,null
-zef,france,15,fake@fake.fake,abc,null
-test,france,57,fake@fake.fake,abcde,null
-oui,oui,0,fake@fake.fake,oui,null
-non,non,0,fake@fake.fake,non,null
+echterelion,espagne,700,fake@fake.fake,edf,null
+zef,france,700,fake@fake.fake,abc,null
+test,france,700,fake@fake.fake,abcde,null
+oui,oui,700,fake@fake.fake,oui,null
+non,non,700,fake@fake.fake,non,null
