@@ -20,6 +20,7 @@ public class EloRankSystem {
 	private static int K = 32;
 	private static Player[] players;
 	private static int[] scoreReelPlayers;
+	private static int[] scoreTheoriquePlayers;
 	
 	
 	public static void majElo(Player[] allPlayers) {
@@ -62,7 +63,7 @@ public class EloRankSystem {
 	 * Retourne Le score attendu en fonction du rank des 2 joueurs (entre 0 et 1)
 	 */
 	public static double scoreTheorique2joueurs(int ancienEloA, int ancienEloB) {
-		return 1.0/(1.0+Math.pow(10.0, (((double)(ancienEloB-ancienEloA))/400.0)));
+		return 1.0/(1.0+Math.pow(10.0, (((double)(ancienEloA-ancienEloB))/400.0)));
 	}
 	
 	/**
@@ -72,8 +73,16 @@ public class EloRankSystem {
 	public static void scoreTheoriqueMultijoueurs() {
 		int n = players.length;
 		int score = 0;
+		for(int i=0; i < players.length; i++)
+		{
+			for(int j=0; j < players.length; j++)
+			{
+				
+			}
 			score = score/(n*(n-1)/2);
-		//return score;
+			scoreTheoriquePlayers[i] = score;
+			
+		}
 	}
 	/**
 	 * Mets dans la map scoreReel le taux scoreReel de la fin de la partie
