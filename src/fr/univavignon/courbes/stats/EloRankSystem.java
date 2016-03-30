@@ -119,6 +119,9 @@ public class EloRankSystem {
 	}
 	
 	
+	/**
+	 * Calcule l'estimation du score (score théorique) pour chaque joueur
+	 */
 	public static void scoreTheoriqueMultijoueurs() {
 		int n = players.length;
 		
