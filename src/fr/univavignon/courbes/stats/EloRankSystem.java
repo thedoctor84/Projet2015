@@ -1,5 +1,6 @@
 package fr.univavignon.courbes.stats;
 
+import java.io.IOException;
 import java.util.Map;
 
 import fr.univavignon.courbes.common.Player;
@@ -22,6 +23,7 @@ public class EloRankSystem {
 	private static Player[] players;
 	private static double[] scoreReelPlayers;
 	private static double[] scoreTheoriquePlayers;
+	private static int[] eloRankPlayers;
 	
 	
 	public static void majElo(Player[] allPlayers) {
@@ -51,12 +53,13 @@ public class EloRankSystem {
 			//classementPartieJoueurs.put(player.profile.profileId,players.length-i);
 			System.out.println("Apres echange : indice:"+k+",nom : "+player.profile.userName+", score :"+player.totalScore+", playerId :"+player.playerId);
 			//eloRank.put(player.profile.profileId, i+700); // CHANGER i+700 AVEC GETELO
-			scoreTheoriqueMultijoueurs();
-			scoreReelMultijoueurs();
 		}
-		Affiche();
+		scoreTheoriqueMultijoueurs();
+		scoreReelMultijoueurs();
+		getEloPlayers();
+		affiche();
 	}
-	public static void Affiche()
+	public static void affiche()
 	{
 		for(int k=0;k<players.length;k++)
 		{
@@ -70,6 +73,38 @@ public class EloRankSystem {
 		int nouvelElo = getElo(profileID)+K*()
 	}/
 	
+
+	
+	/**
+	 * Adaptation du système Elo
+	 * @return
+	 */
+	
+	public static int getElo(String Pseudo)
+	{
+		String url ="http://93.118.34.229//returnelo.php?pseudo="+Pseudo;
+		String eloString="";
+		int elo = 0;
+		Profil_Res joueur = new Profil_Res(url);
+		try {
+			eloString = joueur.get();
+			System.out.println("MDR CEST LELOSTRING :"+eloString);
+			elo = Integer.parseInt(eloString);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return elo;
+		
+	}
+	public static void getEloPlayers(){
+		int n = players.length;
+		eloRankPlayers = new int[n];
+		for(int i=0; i < n; i++)
+		{
+			eloRankPlayers[i] = getElo(players[i].profile.userName);
+		}
+	}
 	/**
 	 * 
 	 * @param ancienEloA
@@ -79,41 +114,32 @@ public class EloRankSystem {
 	 * @return
 	 * Retourne Le score attendu en fonction du rank des 2 joueurs (entre 0 et 1)
 	 */
-	public static double scoreTheorique2joueurs(int ancienEloA, int ancienEloB) {
+	public static double scoreTheorique2Joueurs(int ancienEloA, int ancienEloB) {
 		return 1.0/(1.0+Math.pow(10.0, (((double)(ancienEloA-ancienEloB))/400.0)));
 	}
 	
-	/**
-	 * Adaptation du système Elo
-	 * @return
-	 */
 	
-	/*public static int getElo(String Pseudo)
-	{
-		Profil_Res joueur = new Profil_Res("http://93.118.34.229//returnelo.php?pseudo=");
-		
-	}*/
 	public static void scoreTheoriqueMultijoueurs() {
 		int n = players.length;
 		
-		String pseudo="";
+		String pseudo1="";
+		String pseudo2="";
 		scoreTheoriquePlayers = new double[n];
 		double score = 0;
 		for(int i=0; i < n; i++)
 		{
-			//pseudo=players.
+			pseudo1=players[i].profile.userName;
 			for(int j=0; j < n; j++)
 			{
+				pseudo2=players[j].profile.userName;
 				if(i!=j)
 				{
-					//pseudo=
-					score = score ;
+					score = score+scoreTheorique2Joueurs(getElo(pseudo1),getElo(pseudo2)) ;
 				}
-				
 			}
-			score = 5.0;
+			score = score/(double)(n*(n-1)/2);
 			scoreTheoriquePlayers[i] = score;
-			
+			score=0;
 		}
 	}
 	/**
