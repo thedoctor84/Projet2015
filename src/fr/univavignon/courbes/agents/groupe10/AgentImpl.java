@@ -6,7 +6,7 @@ import fr.univavignon.courbes.common.Direction;
 /**
  * Agent artificiel du groupe 10
  * @author uapv1504323
- *
+ * @author patate
  */
 public class AgentImpl extends Agent {
 
