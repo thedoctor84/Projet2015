@@ -147,11 +147,11 @@ public class Constants
 	/** Limite de points à atteindre */
 	public static final Map<Integer,Integer> POINT_LIMIT_FOR_PLAYER_NBR = new HashMap<Integer,Integer>();
 	static
-	{	/*POINT_LIMIT_FOR_PLAYER_NBR.put(2,10);
+	{	POINT_LIMIT_FOR_PLAYER_NBR.put(2,10);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(3,20);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(4,30);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(5,40);
-		POINT_LIMIT_FOR_PLAYER_NBR.put(6,50);*/
+		POINT_LIMIT_FOR_PLAYER_NBR.put(6,50);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(2,3);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(3,4);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(4,5);
