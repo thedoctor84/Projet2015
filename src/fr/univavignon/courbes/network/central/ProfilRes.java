@@ -7,6 +7,7 @@ import java.util.Vector;
 
 /**
  * @author aurelien
+ * TEST
  *
  */
 public class ProfilRes
