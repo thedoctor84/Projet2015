@@ -79,7 +79,10 @@ public class ProfileManager
 				output.write("fake@fake.fake");
 				output.write(",");
 				output.write(co.getMdp(t.elementAt(i)));
-				output.write(",null\n");
+				output.write(",");
+				output.write(co.getAgent(t.elementAt(i)));
+				output.write("\n");
+				
 				
 				
 			}

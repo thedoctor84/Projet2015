@@ -1,5 +1,5 @@
-zef,france,678,fake@fake.fake,abc,null
-non,non,1094,fake@fake.fake,non,null
-echterelion,espagne,674,fake@fake.fake,edf,null
-test,france,656,fake@fake.fake,abcde,null
-oui,oui,634,fake@fake.fake,oui,null
+echterelion,espagne,681,fake@fake.fake,edf,null
+zef,france,682,fake@fake.fake,abc,null
+non,non,1088,fake@fake.fake,non,null
+oui,oui,632,fake@fake.fake,oui,null
+test,france,651,fake@fake.fake,abcde,avoidcloserwallagent

@@ -1,4 +1,4 @@
-package fr.univavignon.courbes.network.central;
+	package fr.univavignon.courbes.network.central;
 
 import java.net.*;
 import java.io.*;
@@ -56,6 +56,8 @@ public class ProfilRes
 
 			i++;
 		}
+		
+		System.out.println(a.elementAt(0));
 
 		return a;
 	}
@@ -219,7 +221,7 @@ public class ProfilRes
 
 		i++;
 
-		while(i != s.length())
+		while(s.charAt(i) != ' ')
 		{
 			temp += s.charAt(i);
 			i++;
@@ -227,5 +229,49 @@ public class ProfilRes
 
 		return temp;
 	}
+	
+	public String getAgent(String s)
+	{
+		String temp = "";
+		int i = 2;
 
+		while(s.charAt(i) != ' ')
+			i++;
+		
+		i++;
+
+		while(s.charAt(i) != ' ')
+			i++;
+
+		i++;
+
+		while(s.charAt(i) != ' ')
+			i++;
+
+		i++;
+
+		while(s.charAt(i) != ' ')
+			i++;
+
+		i++;
+
+		while(s.charAt(i) != ' ')
+			i++;
+
+		i++;
+
+		while(s.charAt(i) != ' ')
+		{
+			i++;
+		}
+		
+		i++;
+		
+		while(i != s.length())
+		{
+			temp += s.charAt(i);
+			i++;
+		}
+		return temp;
+	}
 }
