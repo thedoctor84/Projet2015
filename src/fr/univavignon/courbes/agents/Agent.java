@@ -18,6 +18,8 @@ package fr.univavignon.courbes.agents;
  * along with Courbes. If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+// TEST
 import java.util.concurrent.Callable;
 
 import fr.univavignon.courbes.common.Board;
