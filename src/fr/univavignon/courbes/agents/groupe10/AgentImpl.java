@@ -83,7 +83,7 @@ public class AgentImpl extends Agent {
 	 * @param map
 	 * @return noeud avec le cout le plus faible.
 	 */
-	public Node plusPetitCout(HashMap<Node,Integer> map)
+	public Node plusPetitHeuristique(HashMap<Node,Integer> map)
 	{
 		int tmp = 1000000000;
 		Node a = null;
@@ -96,10 +96,45 @@ public class AgentImpl extends Agent {
 				a = e.getKey();
 			}
 		}
-		
 		return a;
 	}
 	
+	public Node findWithPos(Position xy, HashMap<Node,Integer> map)
+	{
+		for(Map.Entry<Node,Integer> e : map.entrySet())
+		{
+			if(e.getKey().pos.x == xy.x && e.getKey().pos.y == xy.y)
+			{
+				return e.getKey();
+			}
+		}
+		return null;
+	}
+	
+	public HashSet<Position> returnNeighbors(Position pos)
+	{
+		HashSet<Position> voisin = new HashSet<Position>();
+		
+		Position un = new Position(pos.x-1,pos.y-1);
+		Position deux = new Position(pos.x-1,pos.y);
+		Position trois = new Position(pos.x-1,pos.y+1);
+		Position quatre = new Position(pos.x,pos.y-1);
+		Position cinq = new Position(pos.x,pos.y+1);
+		Position six = new Position(pos.x+1,pos.y-1);
+		Position sept = new Position(pos.x+1,pos.y);
+		Position huit = new Position(pos.x+1,pos.y+1);
+		
+		voisin.add(un);
+		voisin.add(deux);
+		voisin.add(trois);
+		voisin.add(quatre);
+		voisin.add(cinq);
+		voisin.add(six);
+		voisin.add(sept);
+		voisin.add(huit);
+		
+		return voisin;
+	}
 	
 	/**
 	 * @param dep position de départ
@@ -118,7 +153,7 @@ public class AgentImpl extends Agent {
 		
 		while(!open.isEmpty())
 		{
-			Node u = plusPetitCout(open);
+			Node u = plusPetitHeuristique(open);
 			open.remove(u);
 			if(u.pos.x == arr.x && u.pos.y == arr.y)
 			{
@@ -127,7 +162,11 @@ public class AgentImpl extends Agent {
 			
 			else
 			{
-				
+				HashSet<Position> voisin = returnNeighbors(u.pos);
+				for(Position pos : voisin)
+				{
+					
+				}
 			}
 		}
 		System.out.println("Erreur dans la fonction a*");
