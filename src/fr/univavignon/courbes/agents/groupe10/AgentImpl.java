@@ -22,8 +22,6 @@ public class AgentImpl extends Agent {
 	
 	class Node{public Position pos, parent;public int cout,heuristique;}
 	
-	
-	
 	/**
 	 * Constructeur
 	 * @param playerId
@@ -44,8 +42,9 @@ public class AgentImpl extends Agent {
 	
 	/**
 	 * Récupère toutes les positions de tous les serpent et crée un set.
+	 * @return hs set contenant toutes les positions des snakes
 	 */
-	public void CreateBoard()
+	public HashSet<Position>  CreateBoard()
 	{
 		HashSet<Position> hs = new HashSet<Position>();
 		Board board = getBoard();
@@ -62,6 +61,8 @@ public class AgentImpl extends Agent {
 				hs.add(pos);  
 			}
 		}
+		
+		return hs;
 	}
 	
 	/**
