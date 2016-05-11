@@ -229,6 +229,10 @@ public class AgentImpl extends Agent {
 		
 	}
 	
+	/**
+	 * @param a position à verifier
+	 * @return true or false
+	 */
 	public boolean PosLibre(Position a)
 	{
 		boolean check = false;
