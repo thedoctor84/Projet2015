@@ -3,3 +3,4 @@ zef,france,682,fake@fake.fake,abc,null
 non,non,1088,fake@fake.fake,non,null
 oui,oui,632,fake@fake.fake,oui,null
 test,france,651,fake@fake.fake,abcde,avoidcloserwallagent
+groupe10,france,0,fake@fake.fake,ab,groupe10
