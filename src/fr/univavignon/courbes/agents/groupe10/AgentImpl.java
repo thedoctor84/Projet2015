@@ -220,9 +220,26 @@ public class AgentImpl extends Agent {
 				HashSet<Position> voisin = returnNeighbors(u.pos);
 				for(Position pos : voisin)
 				{
-					
+					if(PosLibre(pos))
+					{
+						if(PosExistWithInfCost(pos,closed,(u.cout+1)) || PosExistWithInfCost(pos,open,(u.cout+1)))
+						{
+							continue;
+						}
+						else
+						{
+							Position temp = pos;
+							Node n = new Node();
+							n.cout = u.cout + 1;
+							n.heuristique = n.cout + volOiseau(pos,arr);
+							n.parent = u.pos;
+							n.pos = temp;
+							open.put(n, n.heuristique);
+						}
+					}
 				}
 			}
+			closed.put(u, u.heuristique);
 		}
 		System.out.println("Erreur dans la fonction a*");
 		return null;
