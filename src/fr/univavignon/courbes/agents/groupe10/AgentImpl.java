@@ -14,7 +14,7 @@ import fr.univavignon.courbes.common.Board;
 /**
  * Agent artificiel du groupe 10
  * @author uapv1504323
- * @author patate maison
+ * @author uapv1402334
  * @author uapv1402375
  */
 public class AgentImpl extends Agent {
@@ -226,6 +226,34 @@ public class AgentImpl extends Agent {
 		System.out.println("Erreur dans la fonction a*");
 		return null;
 		
+	}
+	
+	public boolean PosLibre(Position a)
+	{
+		boolean check = false;
+		HashSet<Position> hs = new HashSet<Position>();
+		Board board = getBoard();
+		
+		for(Snake snake : board.snakes)
+		{
+			for(Position pos : snake.oldTrail)
+			{
+				hs.add(pos);
+			}
+			
+			for (Position pos : snake.newTrail)
+			{	
+				hs.add(pos);  
+			}
+		}
+		for(Position pos : hs) {
+			if((pos.x == a.x && pos.y == a.y) ||(pos.x >= board.width || pos.x <= 0
+					|| pos.y >= board.width || pos.y <=0))
+				check = false;
+			else
+				check = true;
+		}
+		return check;
 	}
 
 }
