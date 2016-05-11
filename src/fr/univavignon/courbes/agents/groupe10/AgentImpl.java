@@ -20,7 +20,7 @@ import fr.univavignon.courbes.common.Board;
 public class AgentImpl extends Agent {
 
 	
-	class Node{public Position pos, parent;public int cout,heuristique;}
+	class Node{public Position pos; public Node parent;public int cout,heuristique;}
 	
 	/**
 	 * Constructeur
@@ -29,13 +29,35 @@ public class AgentImpl extends Agent {
 	 */
 	public AgentImpl(Integer playerId) {
 		super(playerId);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Direction processDirection() {
-		// TODO Auto-generated method stub
-		return null;
+		Board b = getBoard();
+		if(b == null)
+			return Direction.NONE;
+		
+		
+		Snake agentsnake = b.snakes[getPlayerId()];
+		Position asnake = new Position(agentsnake.currentX, agentsnake.currentY);
+		HashSet<Position> result = null;
+		for(Snake snake : b.snakes)
+		{
+			Position othersnake = new Position(snake.currentX, snake.currentY);
+			if(snake.playerId != getPlayerId())
+			{
+				result = a_etoile(asnake, othersnake);
+			}
+		}
+	
+		if(!result.isEmpty())
+		{
+			for(Position pos : result)
+			{
+				System.out.println(pos.x + " " + pos.y);
+			}
+		}
+		return Direction.NONE;
 		
 	}
 	
@@ -46,6 +68,7 @@ public class AgentImpl extends Agent {
 	 */
 	public HashSet<Position>  CreateBoard()
 	{
+		checkInterruption();
 		HashSet<Position> hs = new HashSet<Position>();
 		Board board = getBoard();
 		
@@ -72,6 +95,7 @@ public class AgentImpl extends Agent {
 	 */
 	public int volOiseau(Position dep, Position arr)
 	{
+		checkInterruption();
 		int result = 0;
 		if(dep.x >= arr.x)result += dep.x - arr.x;
 		else result += arr.x - dep.x;
@@ -86,6 +110,7 @@ public class AgentImpl extends Agent {
 	 */
 	public Node plusPetitHeuristique(HashMap<Node,Integer> map)
 	{
+		checkInterruption();
 		int tmp = 1000000000;
 		Node a = null;
 		
@@ -108,6 +133,7 @@ public class AgentImpl extends Agent {
 	 */
 	public Node findWithPos(Position xy, HashMap<Node,Integer> map)
 	{
+		checkInterruption();
 		for(Map.Entry<Node,Integer> e : map.entrySet())
 		{
 			if(e.getKey().pos.x == xy.x && e.getKey().pos.y == xy.y)
@@ -126,6 +152,7 @@ public class AgentImpl extends Agent {
 	 */
 	public boolean PosExist(Position a, HashMap<Node,Integer> map)
 	{
+		checkInterruption();
 		for(Map.Entry<Node,Integer> e : map.entrySet())
 		{
 			if(e.getKey().pos.x == a.x && e.getKey().pos.y == a.y)
@@ -145,6 +172,7 @@ public class AgentImpl extends Agent {
 	 */
 	public boolean PosExistWithInfCost(Position a, HashMap<Node,Integer> map, int cost)
 	{
+		checkInterruption();
 		if(!PosExist(a,map))
 		{
 			return false;
@@ -168,6 +196,7 @@ public class AgentImpl extends Agent {
 	 */
 	public HashSet<Position> returnNeighbors(Position pos)
 	{
+		checkInterruption();
 		HashSet<Position> voisin = new HashSet<Position>();
 		
 		Position un = new Position(pos.x-1,pos.y-1);
@@ -196,8 +225,9 @@ public class AgentImpl extends Agent {
 	 * @param arr position d'arrivée
 	 * @return tableau contenant le chemin le plus court
 	 */
-	public Vector<Position> a_etoile(Position dep, Position arr)
+	public HashSet<Position> a_etoile(Position dep, Position arr)
 	{
+		checkInterruption();
 		Node current = new Node();
 		current.pos = dep;
 		current.cout = 0;
@@ -205,16 +235,24 @@ public class AgentImpl extends Agent {
 		HashMap<Node,Integer> closed = new HashMap<Node,Integer>();
 		HashMap<Node,Integer> open = new HashMap<Node,Integer>();
 		open.put(current, current.heuristique);
-		
+
 		while(!open.isEmpty())
 		{
 			Node u = plusPetitHeuristique(open);
 			open.remove(u);
 			if(u.pos.x == arr.x && u.pos.y == arr.y)
 			{
-				//TODO reconstituer et retourner le chemin
+				HashSet<Position> chemin = new HashSet<Position>();
+				Node temp = u;
+				while(temp.pos.x != arr.x || temp.pos.y != arr.y)
+				{
+					System.out.println("Fin");
+					chemin.add(temp.pos);
+					temp = temp.parent;
+				}
+				return chemin;
 			}
-			
+
 			else
 			{
 				HashSet<Position> voisin = returnNeighbors(u.pos);
@@ -228,13 +266,23 @@ public class AgentImpl extends Agent {
 						}
 						else
 						{
-							Position temp = pos;
-							Node n = new Node();
-							n.cout = u.cout + 1;
-							n.heuristique = n.cout + volOiseau(pos,arr);
-							n.parent = u.pos;
-							n.pos = temp;
-							open.put(n, n.heuristique);
+							if(PosExist(pos,open))
+							{
+								Node temp = findWithPos(pos,open);
+								temp.cout = u.cout+1;
+								temp.heuristique = temp.cout + volOiseau(pos,arr);
+								temp.parent = u;
+								temp.pos = pos;
+							}
+							else
+							{	
+								Node n = new Node();
+								n.cout = u.cout + 1;
+								n.heuristique = n.cout + volOiseau(pos,arr);
+								n.parent = u;
+								n.pos = pos;
+								open.put(n, n.heuristique);
+							}
 						}
 					}
 				}
@@ -243,7 +291,7 @@ public class AgentImpl extends Agent {
 		}
 		System.out.println("Erreur dans la fonction a*");
 		return null;
-		
+
 	}
 	
 	/**
@@ -252,6 +300,7 @@ public class AgentImpl extends Agent {
 	 */
 	public boolean PosLibre(Position a)
 	{
+		checkInterruption();
 		boolean check = false;
 		HashSet<Position> hs = new HashSet<Position>();
 		Board board = getBoard();
