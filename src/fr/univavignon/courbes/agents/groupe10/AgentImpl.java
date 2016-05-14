@@ -47,29 +47,20 @@ public class AgentImpl extends Agent {
 			Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
+				result = a_etoile(asnake,othersnake);
 			}
 		}
-		Position pos = new Position();
-		pos.x=100;
-		pos.y=100;
-		//System.out.println(pos.x +" "+pos.y);
-		System.out.println(trouveroute(agentsnake,pos));
-		return trouveroute(agentsnake, pos);
 		
-		
-		/**if(result != null)
+		if(result != null)
 		{
 			for(Position pos : result)
 			{
-				pos.x=100;
-				pos.y=100;
-				//System.out.println(pos.x +" "+pos.y);
-				System.out.println(trouveroute(agentsnake,pos));
+				System.out.println(trouveroute(agentsnake, pos));
 				return trouveroute(agentsnake, pos);
 			}
-		}*/
+		}
 		
-		//return Direction.NONE;
+		return Direction.NONE;
 		
 	}
 	
@@ -81,38 +72,12 @@ public class AgentImpl extends Agent {
 	 */
 	public Direction trouveroute(Snake bot, Position dest)
 	{
-		
-		
-		if(bot.currentAngle >= (3*Math.PI)/2 && bot.currentAngle <= 2*Math.PI)
+		if(bot.currentAngle >= (3*Math.PI)/2 && bot.currentAngle <= (7*Math.PI)/4)
 		{
-			System.out.println("1");
+			
 			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
 			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
 				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-		}
-		
-		if(bot.currentAngle >= Math.PI && bot.currentAngle <= (3*Math.PI)/2)
-		{
-			System.out.println("2");
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
 			}
 			
 			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
@@ -127,13 +92,13 @@ public class AgentImpl extends Agent {
 			
 			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
 			{
-				return Direction.RIGHT;
+				return Direction.LEFT;
 			}
 		}
 		
-		if(bot.currentAngle >= Math.PI/2 && bot.currentAngle <= Math.PI)
+		if(bot.currentAngle >= (7*Math.PI)/4 && bot.currentAngle <= (2*Math.PI)/1)
 		{
-			System.out.println("3");
+			
 			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
 			{
 				return Direction.LEFT;
@@ -155,9 +120,34 @@ public class AgentImpl extends Agent {
 			}
 		}
 		
-		if(bot.currentAngle >= 0 && bot.currentAngle <= Math.PI/2)
+
+		if(bot.currentAngle <= (3*Math.PI)/2 && bot.currentAngle >= (5*Math.PI)/4)
 		{
-			System.out.println("4");
+			
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+		}
+		
+		if(bot.currentAngle <= (5*Math.PI)/4 && bot.currentAngle >= (1*Math.PI)/1)
+		{
+			
 			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
 			{
 				return Direction.RIGHT;
@@ -176,6 +166,103 @@ public class AgentImpl extends Agent {
 			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
 			{
 				return Direction.LEFT;
+			}
+		}
+		
+	
+		if(bot.currentAngle <= (1*Math.PI)/1 && bot.currentAngle >= (3*Math.PI)/4)
+		{
+			
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+		}
+		
+		if(bot.currentAngle <= (3*Math.PI)/4 && bot.currentAngle >= (1*Math.PI)/2)
+		{
+			
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+		}
+		
+		if(bot.currentAngle <= (1*Math.PI)/2 && bot.currentAngle >= (1*Math.PI)/4)
+		{
+			
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+		}
+		
+		if(bot.currentAngle <= (1*Math.PI)/4 && bot.currentAngle >= 0)
+		{
+			
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
 			}
 		}
 		
@@ -324,14 +411,14 @@ public class AgentImpl extends Agent {
 		checkInterruption();
 		HashSet<Position> voisin = new HashSet<Position>();
 		
-		Position un = new Position(pos.x-10,pos.y-10);
-		Position deux = new Position(pos.x-10,pos.y);
-		Position trois = new Position(pos.x-10,pos.y+10);
-		Position quatre = new Position(pos.x,pos.y-10);
-		Position cinq = new Position(pos.x,pos.y+10);
-		Position six = new Position(pos.x+10,pos.y-10);
-		Position sept = new Position(pos.x+10,pos.y);
-		Position huit = new Position(pos.x+10,pos.y+10);
+		Position un = new Position(pos.x-3,pos.y-3);
+		Position deux = new Position(pos.x-3,pos.y);
+		Position trois = new Position(pos.x-3,pos.y+3);
+		Position quatre = new Position(pos.x,pos.y-3);
+		Position cinq = new Position(pos.x,pos.y+3);
+		Position six = new Position(pos.x+3,pos.y-3);
+		Position sept = new Position(pos.x+3,pos.y);
+		Position huit = new Position(pos.x+3,pos.y+3);
 		
 		voisin.add(un);
 		voisin.add(deux);
@@ -360,20 +447,19 @@ public class AgentImpl extends Agent {
 		HashMap<Node,Integer> closed = new HashMap<Node,Integer>();
 		HashMap<Node,Integer> open = new HashMap<Node,Integer>();
 		open.put(current, current.heuristique);
-
+	
 		while(!open.isEmpty())
 		{
+			checkInterruption();
 			Node u = plusPetitHeuristique(open);
 			open.remove(u);
-			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10))
+			if((u.pos.x <= arr.x + 20 && u.pos.x >= arr.x - 20) && (u.pos.y <= arr.y + 20 && u.pos.y >= arr.y - 20))
 			{
-				//System.out.println("Fin");
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
 				
 				while(temp.parent != null)
 				{
-					
 					chemin.add(temp.pos);
 					temp = temp.parent;
 				}
@@ -385,6 +471,8 @@ public class AgentImpl extends Agent {
 				HashSet<Position> voisin = returnNeighbors(u.pos);
 				for(Position pos : voisin)
 				{
+					checkInterruption();
+					
 					if(PosLibre(pos))
 					{
 						if(PosExistWithInfCost(pos,closed,(u.cout+1)) || PosExistWithInfCost(pos,open,(u.cout+1)))
@@ -412,10 +500,7 @@ public class AgentImpl extends Agent {
 							}
 						}
 					}
-					else
-					{
-						continue;
-					}
+					
 				}
 			}
 			closed.put(u, u.heuristique);
@@ -432,7 +517,6 @@ public class AgentImpl extends Agent {
 	public boolean PosLibre(Position a)
 	{
 		checkInterruption();
-		boolean check = true;
 		HashSet<Position> hs = new HashSet<Position>();
 		Board board = getBoard();
 
@@ -443,33 +527,34 @@ public class AgentImpl extends Agent {
 				hs.add(pos);
 			}
 
-			for (Position pos : snake.newTrail)
+			/**for (Position pos : snake.newTrail)
 			{	
 				hs.add(pos);  
-			}
+			}*/
 		}
 		
 		for(Position pos : hs) 
 		{
 
-			if((a.x <= pos.x + 10 && a.x >= pos.x - 10) && (a.y <= pos.y + 10 && a.y >= pos.y - 10))
+			if((a.x <= pos.x + 0 && a.x >= pos.x - 0) && (a.y <= pos.y + 0 && a.y >= pos.y - 0))
 			{
-				check = false;
+				//System.out.println("TEST");
+				return false;
 			}
 
 		}
 
 		if(a.x >= board.width - 10 || a.x <= 10)
 		{
-			check = false;
+			return false;
 		}
 
 		if(a.y >= board.height - 10 || a.y <= 10)
 		{
-			check= false;
+			return false;
 		}
 		
-		return check;
+		return true;
 	}
 
 }
