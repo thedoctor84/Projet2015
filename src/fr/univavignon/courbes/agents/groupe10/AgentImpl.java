@@ -49,8 +49,8 @@ public class AgentImpl extends Agent {
 				result = a_etoile(asnake, othersnake);
 			}
 		}
-	
-		if(!result.isEmpty())
+		System.out.println("current angle = " + agentsnake.currentAngle);
+		if(result != null)
 		{
 			for(Position pos : result)
 			{
@@ -199,14 +199,14 @@ public class AgentImpl extends Agent {
 		checkInterruption();
 		HashSet<Position> voisin = new HashSet<Position>();
 		
-		Position un = new Position(pos.x-1,pos.y-1);
-		Position deux = new Position(pos.x-1,pos.y);
-		Position trois = new Position(pos.x-1,pos.y+1);
-		Position quatre = new Position(pos.x,pos.y-1);
-		Position cinq = new Position(pos.x,pos.y+1);
-		Position six = new Position(pos.x+1,pos.y-1);
-		Position sept = new Position(pos.x+1,pos.y);
-		Position huit = new Position(pos.x+1,pos.y+1);
+		Position un = new Position(pos.x-10,pos.y-10);
+		Position deux = new Position(pos.x-10,pos.y);
+		Position trois = new Position(pos.x-10,pos.y+10);
+		Position quatre = new Position(pos.x,pos.y-10);
+		Position cinq = new Position(pos.x,pos.y+10);
+		Position six = new Position(pos.x+10,pos.y-10);
+		Position sept = new Position(pos.x+10,pos.y);
+		Position huit = new Position(pos.x+10,pos.y+10);
 		
 		voisin.add(un);
 		voisin.add(deux);
@@ -240,17 +240,19 @@ public class AgentImpl extends Agent {
 		{
 			Node u = plusPetitHeuristique(open);
 			open.remove(u);
-			if(u.pos.x == arr.x && u.pos.y == arr.y)
+			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10))
 			{
+				System.out.println("Fin");
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
-				while(temp.pos.x != arr.x || temp.pos.y != arr.y)
+				
+				while(temp.parent != null)
 				{
-					System.out.println("Fin");
+					
 					chemin.add(temp.pos);
 					temp = temp.parent;
 				}
-				return chemin;
+				return chemin; 
 			}
 
 			else
@@ -285,6 +287,10 @@ public class AgentImpl extends Agent {
 							}
 						}
 					}
+					else
+					{
+						continue;
+					}
 				}
 			}
 			closed.put(u, u.heuristique);
@@ -301,29 +307,43 @@ public class AgentImpl extends Agent {
 	public boolean PosLibre(Position a)
 	{
 		checkInterruption();
-		boolean check = false;
+		boolean check = true;
 		HashSet<Position> hs = new HashSet<Position>();
 		Board board = getBoard();
-		
+
 		for(Snake snake : board.snakes)
 		{
 			for(Position pos : snake.oldTrail)
 			{
 				hs.add(pos);
 			}
-			
+
 			for (Position pos : snake.newTrail)
 			{	
 				hs.add(pos);  
 			}
 		}
-		for(Position pos : hs) {
-			if((pos.x == a.x && pos.y == a.y) ||(pos.x >= board.width || pos.x <= 0
-					|| pos.y >= board.width || pos.y <=0))
+		
+		for(Position pos : hs) 
+		{
+
+			if((a.x <= pos.x + 10 && a.x >= pos.x - 10) && (a.y <= pos.y + 10 && a.y >= pos.y - 10))
+			{
 				check = false;
-			else
-				check = true;
+			}
+
 		}
+
+		if(a.x >= board.width - 10 || a.x <= 10)
+		{
+			check = false;
+		}
+
+		if(a.y >= board.height - 10 || a.y <= 10)
+		{
+			check= false;
+		}
+		
 		return check;
 	}
 
