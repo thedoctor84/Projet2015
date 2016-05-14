@@ -8,6 +8,7 @@ import fr.univavignon.courbes.common.Snake;
 import java.util.Vector;
 import java.util.HashSet;
 import java.util.Map;
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import fr.univavignon.courbes.common.Board;
 
@@ -46,18 +47,142 @@ public class AgentImpl extends Agent {
 			Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
-				result = a_etoile(asnake, othersnake);
 			}
 		}
-		System.out.println("current angle = " + agentsnake.currentAngle);
-		if(result != null)
+		Position pos = new Position();
+		pos.x=100;
+		pos.y=100;
+		//System.out.println(pos.x +" "+pos.y);
+		System.out.println(trouveroute(agentsnake,pos));
+		return trouveroute(agentsnake, pos);
+		
+		
+		/**if(result != null)
 		{
 			for(Position pos : result)
 			{
-				System.out.println(pos.x + " " + pos.y);
+				pos.x=100;
+				pos.y=100;
+				//System.out.println(pos.x +" "+pos.y);
+				System.out.println(trouveroute(agentsnake,pos));
+				return trouveroute(agentsnake, pos);
+			}
+		}*/
+		
+		//return Direction.NONE;
+		
+	}
+	
+	
+	/**
+	 * @param snake snake du bot
+	 * @param dest destination trouvé par a *
+	 * @return direction
+	 */
+	public Direction trouveroute(Snake bot, Position dest)
+	{
+		
+		
+		if(bot.currentAngle >= (3*Math.PI)/2 && bot.currentAngle <= 2*Math.PI)
+		{
+			System.out.println("1");
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
 			}
 		}
+		
+		if(bot.currentAngle >= Math.PI && bot.currentAngle <= (3*Math.PI)/2)
+		{
+			System.out.println("2");
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+		}
+		
+		if(bot.currentAngle >= Math.PI/2 && bot.currentAngle <= Math.PI)
+		{
+			System.out.println("3");
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+		}
+		
+		if(bot.currentAngle >= 0 && bot.currentAngle <= Math.PI/2)
+		{
+			System.out.println("4");
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
+			{
+				return Direction.RIGHT;
+			}
+			
+			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
+			{
+				return Direction.LEFT;
+			}
+		}
+		
+		
 		return Direction.NONE;
+		
+		
 		
 	}
 	
@@ -242,7 +367,7 @@ public class AgentImpl extends Agent {
 			open.remove(u);
 			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10))
 			{
-				System.out.println("Fin");
+				//System.out.println("Fin");
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
 				
