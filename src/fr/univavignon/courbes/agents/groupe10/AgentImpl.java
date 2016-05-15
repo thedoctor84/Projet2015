@@ -5,12 +5,10 @@ import fr.univavignon.courbes.common.Direction;
 import fr.univavignon.courbes.common.Position;
 import fr.univavignon.courbes.common.Snake;
 
-import java.util.Vector;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import fr.univavignon.courbes.common.Board;
 
@@ -84,12 +82,12 @@ public class AgentImpl extends Agent {
 
 				for(int i=0;i<board.snakes.length;++i)
 				{	checkInterruption();	// on doit tester l'interruption au début de chaque boucle
-				Snake snake = board.snakes[i];
-
-				// on traite seulement les serpents des autres joueurs
-				if(i != getPlayerId())
-					// on met à jour la distance à l'obstacle le plus proche
-					processObstacleSnake(snake, closestObstacle);
+					Snake snake = board.snakes[i];
+	
+					// on traite seulement les serpents des autres joueurs
+					if(i != getPlayerId())
+						// on met à jour la distance à l'obstacle le plus proche
+						processObstacleSnake(snake, closestObstacle);
 				}
 
 				processObstacleBorder(closestObstacle);
@@ -101,19 +99,19 @@ public class AgentImpl extends Agent {
 					System.out.println("ARRRRR");
 					for(Position pos : result)
 					{
+						checkInterruption();
 						System.out.println(pos);
 						previousDirection = trouveroute(agentsnake, pos);;
 						return trouveroute(agentsnake, pos);
 					}
 				}
-
 			}
 		}
 		previousDirection = dir;
 		return dir;
 		
 	}
-	
+	/** Moitié de l'angle de vision de l'agent, i.e. délimitant la zone traitée devant lui pour détecter des obstacles. Contrainte : doit être inférieure à PI */
 	private static double ANGLE_WIDTH = Math.PI/2;
 	
 	/** Direction courante du serpent de l'agent */
@@ -123,8 +121,12 @@ public class AgentImpl extends Agent {
 	/** Borne supérieure de l'angle de vision de l'agent */
 	private double upperBound;
 	
+	/**
+	 * Met à jour l'angle de vision de l'agent.
+	 */
 	private void updateAngles()
-	{	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
+	{	
+		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		
 		// angle de déplacement
 		currentAngle = agentsnake.currentAngle;
@@ -133,8 +135,16 @@ public class AgentImpl extends Agent {
 		upperBound = currentAngle + ANGLE_WIDTH;
 	}
 	
+	/**
+	 * Détermine si on considère que la tête du serpent de l'agent
+	 * se trouve dans un coin de l'aire de jeu.
+	 *  
+	 * @return
+	 * 		{@code true} ssi l'agent est dans un coin.
+	 */
 	private boolean isInCorner()
-	{	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
+	{	
+		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		
 		boolean result = agentsnake.currentX<CORNER_THRESHOLD && agentsnake.currentY<CORNER_THRESHOLD
 			|| getBoard().width-agentsnake.currentX<CORNER_THRESHOLD && agentsnake.currentY<CORNER_THRESHOLD
@@ -143,9 +153,21 @@ public class AgentImpl extends Agent {
 		return result;
 	}
 	
-	
+	/**
+	 * Reçoit un serpent et détermine le point le plus proche de sa
+	 * trainée, ainsi que l'angle formé avec la position courante
+	 * de la tête du serpent de cet agent.
+	 * 
+	 * @param snake
+	 * 		Le serpent à traiter (un autre joueur).
+	 * @param result
+	 * 		Un tableau de réel contenant la distance du pixel le plus
+	 * 		proche appartenant à un obstacle, et l'angle qu'il forme
+	 * 		avec la position courante de cet agent.
+	 */
 	private void processObstacleSnake(Snake snake, double result[])
-	{	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
+	{	
+		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		
 		// on récupère les positions de la trainée (complète) du serpent
 		Set<Position> trail = new TreeSet<Position>(snake.oldTrail);
@@ -177,7 +199,16 @@ public class AgentImpl extends Agent {
 		}
 	}
 	
-	
+	/**
+	 * Détermine le point le plus proche de la bordure constituant un
+	 * obstacle pour cet agent, ainsi que l'angle formé avec la position 
+	 * courante de la tête du serpent de cet agent.
+	 * 
+	 * @param result
+	 * 		Un tableau de réel contenant la distance du pixel le plus
+	 * 		proche appartenant à un obstacle, et l'angle qu'il forme
+	 * 		avec la position courante de cet agent.
+	 */
 	private void processObstacleBorder(double result[])
 	{	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		
@@ -207,7 +238,15 @@ public class AgentImpl extends Agent {
 		}
 	}
 	
-	
+	/**
+	 * Renvoie la direction permettant au serpent de s'écarter d'un angle donné.
+	 * 
+	 * @param angle 
+	 * 		L'angle traité (entre 0 et 2PI).
+	 * @return 
+	 * 		Direction permettant de s'écarter de cet angle (ou {@code null} si 
+	 * 		l'angle n'est pas visible).
+	 */
 	private Direction getDodgeDirection(double angle) 
 	{	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		Direction result = Direction.NONE;
@@ -236,7 +275,14 @@ public class AgentImpl extends Agent {
 	}
 	
 	
-	
+	/**
+	 * Teste si un angle donné est compris dans l'angle de vision d'un agent.
+	 * 
+	 * @param angle 
+	 * 		L'angle testé (entre 0 et 2PI).
+	 * @return 
+	 * 		{@code true} ssi l'angle est visible par le serpent.
+	 */
 	private boolean isInSight(double angle)
 	{	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		boolean result = false;
@@ -259,7 +305,7 @@ public class AgentImpl extends Agent {
 	
 	
 	/**
-	 * @param snake snake du bot
+	 * @param bot snake du bot
 	 * @param dest destination trouvé par a *
 	 * @return direction
 	 */
