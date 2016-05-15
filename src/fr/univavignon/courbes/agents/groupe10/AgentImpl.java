@@ -22,11 +22,21 @@ import fr.univavignon.courbes.common.Board;
  */
 public class AgentImpl extends Agent {
 
+	/** Notre agent */
 	Snake agentsnake;
+	/** Distance en pixels à partir de laquelle on considère qu'on est dans un coin */
 	private static int CORNER_THRESHOLD = 100;
 	private Direction previousDirection = Direction.NONE;
 	
-	class Node{public Position pos; public Node parent;public double cout,heuristique;}
+	/**
+	 * La classe Node representant un noeud sert à l'algorithme A*
+	 *
+	 */
+	class Node {
+		public Position pos; 
+		public Node parent;
+		public double cout,heuristique;
+	}
 	
 	/**
 	 * Constructeur
@@ -40,17 +50,19 @@ public class AgentImpl extends Agent {
 	@Override
 	public Direction processDirection() 
 	{
+		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		Direction dir = null;
-		Board b = getBoard();
-		if(b == null)
+		Board board = getBoard();
+		if(board == null)
 			return Direction.NONE;
 		
 		
-		agentsnake = b.snakes[getPlayerId()];
+		agentsnake = board.snakes[getPlayerId()];
 		Position asnake = new Position(agentsnake.currentX, agentsnake.currentY);
 		HashSet<Position> result = null;
-		for(Snake snake : b.snakes)
+		for(Snake snake : board.snakes)
 		{
+			checkInterruption();
 			Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
@@ -61,18 +73,18 @@ public class AgentImpl extends Agent {
 		if(result != null)
 		{
 			if(previousDirection!=Direction.NONE && isInCorner())
+			{
 				dir = previousDirection;
-			
+			}
 			else
 			{
-
 				updateAngles();
 				System.out.println("BBBB");
 				double closestObstacle[] = {Double.POSITIVE_INFINITY, 0};
 
-				for(int i=0;i<b.snakes.length;++i)
+				for(int i=0;i<board.snakes.length;++i)
 				{	checkInterruption();	// on doit tester l'interruption au début de chaque boucle
-				Snake snake = b.snakes[i];
+				Snake snake = board.snakes[i];
 
 				// on traite seulement les serpents des autres joueurs
 				if(i != getPlayerId())
