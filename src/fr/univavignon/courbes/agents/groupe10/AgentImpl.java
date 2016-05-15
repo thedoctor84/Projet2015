@@ -71,7 +71,7 @@ public class AgentImpl extends Agent {
 		
 		if(result != null)
 		{
-			if(previousDirection!=Direction.NONE && isInCorner())
+			/**if(previousDirection!=Direction.NONE && isInCorner())
 			{
 				dir = previousDirection;
 			}
@@ -93,22 +93,22 @@ public class AgentImpl extends Agent {
 
 				processObstacleBorder(closestObstacle);
 
-				dir = getDodgeDirection(closestObstacle[1]);
+				dir = getDodgeDirection(closestObstacle[1]);*/
 
-				if(dir == Direction.NONE)
+				//if(dir == Direction.NONE)
 				{	
-					System.out.println("ARRRRR");
+					//System.out.println("ARRRRR");
 					for(Position pos : result)
 					{
 						checkInterruption();
-						System.out.println(pos);
+						//System.out.println(pos);
 						previousDirection = trouveroute(agentsnake, pos);;
 						return trouveroute(agentsnake, pos);
 					}
 				}
-			}
+			//}
 		}
-		previousDirection = dir;
+		//previousDirection = dir;
 		return dir;
 		
 	}
@@ -306,6 +306,8 @@ public class AgentImpl extends Agent {
 	
 	
 	/**
+	 * En fonction de l'angle entre le snake et l'horizontale et en fonction de la où on veut aller
+	 * retourne une direction
 	 * @param bot snake du bot
 	 * @param dest destination trouvé par a *
 	 * @return direction
@@ -313,10 +315,11 @@ public class AgentImpl extends Agent {
 	public Direction trouveroute(Snake bot, Position dest)
 	{
 		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
-		if(bot.currentAngle >= (3*Math.PI)/2 && bot.currentAngle <= (7*Math.PI)/4)
+		
+		if(bot.currentAngle >= (3*Math.PI)/2 && bot.currentAngle <= (7*Math.PI)/4) // le cercle des radians est inversé.
 		{
 			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
+			if(bot.currentX <= dest.x && bot.currentY >= dest.y) 
 			{
 				return Direction.RIGHT;
 			}
@@ -555,6 +558,7 @@ public class AgentImpl extends Agent {
 	}
 	
 	/**
+	 * retourne le noeud avec la plus petite heuristique dans la map map
 	 * @param map map où chercher
 	 * @return noeud avec le cout le plus faible.
 	 */
@@ -691,34 +695,35 @@ public class AgentImpl extends Agent {
 		{
 			//System.out.println(open.size());
 			checkInterruption();
-			Node u = plusPetitHeuristique(open);
-			open.remove(u);
+			Node u = plusPetitHeuristique(open); // on check en premier le noeud avec le plus petit cout heuristique dans open
+												// car il se rapproche le  plus de l'arrivée
+			open.remove(u);						//on enleve le noeud que l'on verifie
 		
-			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10))
+			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10)) // si on atteint l'objectif
 			{
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
 				
 				while(temp.parent != null)
 				{
-					chemin.add(temp.pos);
+					chemin.add(temp.pos);		// on met le chemin dans chemin X)
 					temp = temp.parent;
 				}
 				System.out.println("------------------------------------------------------");
-				return chemin; 
+				return chemin;  // et on retourne
 			}
 
 			else
 			{
-				HashSet<Position> voisin = returnNeighbors(u.pos);
+				HashSet<Position> voisin = returnNeighbors(u.pos); // on regarde tous les voisins de notre position
 				for(Position pos : voisin)
 				{
 					checkInterruption();
 					
-					if(PosLibre(pos))
+					if(PosLibre(pos)) // si il n'y a pas d'obstacle à cette position
 					{
 						
-						if(PosExistWithInfCost(pos,closed,(u.cout+1)) || PosExistWithInfCost(pos,open,(u.cout+1)))
+						if(PosExistWithInfCost(pos,closed,(u.cout+1)) || PosExistWithInfCost(pos,open,(u.cout+1))) // si la position existe deja dans open ou closed avec un cout inferieur on ne fait rien
 						{
 							//System.out.println("ARRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGGG");
 							continue;
@@ -726,7 +731,7 @@ public class AgentImpl extends Agent {
 						else
 						{
 							
-							if(PosExist(pos,open))
+							if(PosExist(pos,open)) // si la position existe deja mais avec un cout supérieur on la remplace
 							{
 								
 								Node temp = findWithPos(pos,open);
@@ -735,7 +740,7 @@ public class AgentImpl extends Agent {
 								temp.parent = u;
 								temp.pos = pos;
 							}
-							else
+							else // sinon on la crée
 							{	
 								Node n = new Node();
 								n.cout = u.cout + 1;
@@ -750,7 +755,7 @@ public class AgentImpl extends Agent {
 					
 				}
 			}
-			closed.put(u, u.heuristique);
+			closed.put(u, u.heuristique); // on ajoute le noeud traité dans closed (qui regroupe les noeuds deja traités).
 		}
 		System.out.println("Erreur dans la fonction a*");
 		return null;
@@ -758,6 +763,7 @@ public class AgentImpl extends Agent {
 	}
 	
 	/**
+	 * verifie si la position présente un obstacle ou non
 	 * @param a position à verifier
 	 * @return true or false
 	 */
@@ -783,9 +789,10 @@ public class AgentImpl extends Agent {
 		for(Position pos : hs) 
 		{
 
-			if((a.x <= pos.x + 1 && a.x >= pos.x - 1) && (a.y <= pos.y + 1 && a.y >= pos.y - 1))
+			if((a.x <= pos.x + 5 && a.x >= pos.x - 5) && (a.y <= pos.y + 5 && a.y >= pos.y - 5))
 			{
-				//System.out.println("TEST");
+				
+				System.out.println(pos);
 				return false;
 			}
 
