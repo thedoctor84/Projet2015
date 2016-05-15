@@ -24,6 +24,7 @@ public class AgentImpl extends Agent {
 	Snake agentsnake;
 	/** Distance en pixels à partir de laquelle on considère qu'on est dans un coin */
 	private static int CORNER_THRESHOLD = 100;
+	/** Direction précédemment choisie par cet agent */
 	private Direction previousDirection = Direction.NONE;
 	
 	/**
