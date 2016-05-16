@@ -103,7 +103,7 @@ public class AgentImpl extends Agent {
 					{
 						checkInterruption();
 						//System.out.println(pos);
-						previousDirection = trouveRoute(agentsnake, pos);;
+						previousDirection = trouveRoute(agentsnake, pos);
 						return trouveRoute(agentsnake, pos);
 					}
 				}
