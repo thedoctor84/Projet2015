@@ -60,18 +60,27 @@ public class AgentImpl extends Agent {
 		agentsnake = board.snakes[getPlayerId()];
 		Position asnake = new Position(agentsnake.currentX, agentsnake.currentY);
 		HashSet<Position> result = null;
+		Position othersnake = new Position(0, 0);
 		for(Snake snake : board.snakes)
 		{
 			checkInterruption();
-			Position othersnake = new Position(snake.currentX, snake.currentY);
+			/*Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
 				result = a_etoile(asnake,othersnake);
+			}*/
+			if(snake.playerId != getPlayerId())
+			{
+				othersnake = new Position(snake.currentX, snake.currentY);
+				System.out.println("othersnake : "+snake.currentX+","+snake.currentY);
 			}
 		}
+		dir = trouveRoute(agentsnake, othersnake);
+		System.out.println("dir vaut"+dir);
+		return dir;
 		
-		if(result != null)
-		{
+		//if(result != null)
+		//{
 			/**if(previousDirection!=Direction.NONE && isInCorner())
 			{
 				dir = previousDirection;
@@ -97,20 +106,21 @@ public class AgentImpl extends Agent {
 				dir = getDodgeDirection(closestObstacle[1]);*/
 
 				//if(dir == Direction.NONE)
-				{	
+				//{	
 					//System.out.println("ARRRRR");
-					for(Position pos : result)
+					/*for(Position pos : result)
 					{
 						checkInterruption();
 						//System.out.println(pos);
 						previousDirection = trouveRoute(agentsnake, pos);
 						return trouveRoute(agentsnake, pos);
-					}
-				}
+					}*/
+				//}
+					//return trouveRoute(agentsnake, othersnake);
 			//}
-		}
+		//}
 		//previousDirection = dir;
-		return dir;
+		//return dir;
 		
 	}
 	/** Moitié de l'angle de vision de l'agent, i.e. délimitant la zone traitée devant lui pour détecter des obstacles. Contrainte : doit être inférieure à PI */
@@ -520,22 +530,29 @@ public class AgentImpl extends Agent {
 	
 	public Direction trouveRoute(Snake bot, Position dest)
 	{
+		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
 		final double INTERVALLE_ANGLE = Math.PI/12;
 		updateAngles();
 		double angle = Math.atan2(dest.y-agentsnake.currentY, dest.x-agentsnake.currentX);
 		if(angle<0)
 			angle = angle + 2*Math.PI;
 		
+		System.out.println("currentAngle = "+currentAngle);
+		System.out.println("angle pour aller a l'autre = "+angle);
+		
 		if(angle <= (currentAngle+INTERVALLE_ANGLE) && angle >= (currentAngle-INTERVALLE_ANGLE))
 		{
+			System.out.println("coucou");
 			return Direction.NONE;
 		}
 		else if(angle < (currentAngle-INTERVALLE_ANGLE))
 		{
+			System.out.println("tourne a gauche");
 			return Direction.LEFT;
 		}
 		else
 		{
+			System.out.println("tourne a droite");
 			return Direction.RIGHT;
 		}
 	}
