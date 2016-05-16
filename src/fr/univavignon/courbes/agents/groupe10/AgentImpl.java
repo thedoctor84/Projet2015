@@ -72,11 +72,9 @@ public class AgentImpl extends Agent {
 			if(snake.playerId != getPlayerId())
 			{
 				othersnake = new Position(snake.currentX, snake.currentY);
-				System.out.println("othersnake : "+snake.currentX+","+snake.currentY);
 			}
 		}
 		dir = trouveRoute(agentsnake, othersnake);
-		System.out.println("dir vaut"+dir);
 		return dir;
 		
 		//if(result != null)
@@ -314,249 +312,52 @@ public class AgentImpl extends Agent {
 			
 		return result;
 	}
-	
-	
-	/**
-	 * En fonction de l'angle entre le snake et l'horizontale et en fonction de la où on veut aller
-	 * retourne une direction
-	 * @param bot snake du bot
-	 * @param dest destination trouvé par a *
-	 * @return direction
-	 */
-	public Direction trouveroute(Snake bot, Position dest)
-	{
-		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
-		
-		if(bot.currentAngle >= (3*Math.PI)/2 && bot.currentAngle <= (7*Math.PI)/4) // le cercle des radians est inversé.
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y) 
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-		}
-		
-		if(bot.currentAngle >= (7*Math.PI)/4 && bot.currentAngle <= (2*Math.PI)/1)
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-		}
-		
 
-		if(bot.currentAngle <= (3*Math.PI)/2 && bot.currentAngle >= (5*Math.PI)/4)
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-		}
-		
-		if(bot.currentAngle <= (5*Math.PI)/4 && bot.currentAngle >= (1*Math.PI)/1)
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-		}
-		
-	
-		if(bot.currentAngle <= (1*Math.PI)/1 && bot.currentAngle >= (3*Math.PI)/4)
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-		}
-		
-		if(bot.currentAngle <= (3*Math.PI)/4 && bot.currentAngle >= (1*Math.PI)/2)
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-		}
-		
-		if(bot.currentAngle <= (1*Math.PI)/2 && bot.currentAngle >= (1*Math.PI)/4)
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-		}
-		
-		if(bot.currentAngle <= (1*Math.PI)/4 && bot.currentAngle >= 0)
-		{
-			
-			if(bot.currentX <= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX <= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY >= dest.y)
-			{
-				return Direction.LEFT;
-			}
-			
-			if(bot.currentX >= dest.x && bot.currentY <= dest.y)
-			{
-				return Direction.RIGHT;
-			}
-		}
-		
-		
-		return Direction.NONE;
-		
-	}
-	
-	
-	
+    /**
+     * Distance angulaire la plus courte entre deux angles orientés
+     * Ce sera compris entre -Pi et Pi.
+     * @param angleDepart L'angle de depart
+     * @param angleArrivee L'angle d'arrivée
+     * @return l'angle orienté le plus petit entre les deux angles, en radians
+     * 
+     */
+    private double distance(double angleDepart, double angleArrivee) {
+    	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
+        double phi = Math.abs(angleArrivee - angleDepart) % (2*Math.PI);
+        double distance = phi > Math.PI ? 2*Math.PI - phi : phi;
+        int signe = (angleArrivee -  angleDepart >= 0 && angleArrivee - angleDepart <=  Math.PI) || (angleArrivee - angleDepart <= -Math.PI && angleArrivee - angleDepart >= -2*Math.PI) ? 1 : -1; 
+        distance *= signe;
+        return distance;
+    }
+
+	/**
+	 * Decide de la direction a prendre pour aller au point dest
+	 * @param bot L'agent
+	 * @param dest La position de destination
+	 * @return La direction à prendre pour que l'agent s'appproche de la destination
+	 */
 	public Direction trouveRoute(Snake bot, Position dest)
 	{
 		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
-		final double INTERVALLE_ANGLE = Math.PI/12;
+		final double INTERVALLE_ANGLE = Math.PI/18; // = 10 degre
 		updateAngles();
 		double angle = Math.atan2(dest.y-agentsnake.currentY, dest.x-agentsnake.currentX);
 		if(angle<0)
 			angle = angle + 2*Math.PI;
 		
-		System.out.println("currentAngle = "+currentAngle);
-		System.out.println("angle pour aller a l'autre = "+angle);
-		
-		if(angle <= (currentAngle+INTERVALLE_ANGLE) && angle >= (currentAngle-INTERVALLE_ANGLE))
+		if( Math.abs(distance(currentAngle,angle)) < INTERVALLE_ANGLE)
 		{
-			System.out.println("coucou");
 			return Direction.NONE;
 		}
-		else if(angle < (currentAngle-INTERVALLE_ANGLE))
+		else if(distance(currentAngle,angle) < 0)
 		{
-			System.out.println("tourne a gauche");
 			return Direction.LEFT;
 		}
 		else
 		{
-			System.out.println("tourne a droite");
 			return Direction.RIGHT;
 		}
 	}
-	
 	
 	
 	/**
