@@ -520,21 +520,24 @@ public class AgentImpl extends Agent {
 	
 	public Direction trouveRoute(Snake bot, Position dest)
 	{
+		final double INTERVALLE_ANGLE = Math.PI/12;
 		updateAngles();
 		double angle = Math.atan2(dest.y-agentsnake.currentY, dest.x-agentsnake.currentX);
 		if(angle<0)
 			angle = angle + 2*Math.PI;
 		
-		if(angle < currentAngle)
+		if(angle <= (currentAngle+INTERVALLE_ANGLE) && angle >= (currentAngle-INTERVALLE_ANGLE))
+		{
+			return Direction.NONE;
+		}
+		else if(angle < (currentAngle-INTERVALLE_ANGLE))
 		{
 			return Direction.LEFT;
 		}
-		if(angle > currentAngle)
+		else
 		{
 			return Direction.RIGHT;
 		}
-		
-		return Direction.NONE;
 	}
 	
 	
