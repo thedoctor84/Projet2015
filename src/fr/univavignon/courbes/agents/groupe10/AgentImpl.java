@@ -103,8 +103,8 @@ public class AgentImpl extends Agent {
 					{
 						checkInterruption();
 						//System.out.println(pos);
-						previousDirection = trouveroute(agentsnake, pos);;
-						return trouveroute(agentsnake, pos);
+						previousDirection = trouveRoute(agentsnake, pos);;
+						return trouveRoute(agentsnake, pos);
 					}
 				}
 			//}
@@ -517,6 +517,28 @@ public class AgentImpl extends Agent {
 	}
 	
 	
+	
+	public Direction trouveRoute(Snake bot, Position dest)
+	{
+		updateAngles();
+		double angle = Math.atan2(dest.y-agentsnake.currentY, dest.x-agentsnake.currentX);
+		if(angle<0)
+			angle = angle + 2*Math.PI;
+		
+		if(angle < currentAngle)
+		{
+			return Direction.LEFT;
+		}
+		if(angle > currentAngle)
+		{
+			return Direction.RIGHT;
+		}
+		
+		return Direction.NONE;
+	}
+	
+	
+	
 	/**
 	 * Récupère toutes les positions de tous les serpent et crée un set.
 	 * @return hs set contenant toutes les positions des snakes
@@ -701,7 +723,7 @@ public class AgentImpl extends Agent {
 												// car il se rapproche le  plus de l'arrivée
 			open.remove(u);						//on enleve le noeud que l'on verifie
 		
-			if((u.pos.x <= arr.x + 15 && u.pos.x >= arr.x - 15) && (u.pos.y <= arr.y + 15 && u.pos.y >= arr.y - 15)) // si on atteint l'objectif
+			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10)) // si on atteint l'objectif
 			{
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
@@ -711,7 +733,7 @@ public class AgentImpl extends Agent {
 					chemin.add(temp.pos);		// on met le chemin dans chemin X)
 					temp = temp.parent;
 				}
-				System.out.println("------------------------------------------------------");
+				//System.out.println("------------------------------------------------------");
 				return chemin;  // et on retourne
 			}
 
@@ -809,7 +831,7 @@ public class AgentImpl extends Agent {
 		for(Position pos : trail) 
 		{
 			checkInterruption();
-			if((a.x <= pos.x + 5 && a.x >= pos.x - 5) && (a.y <= pos.y + 5 && a.y >= pos.y - 5))
+			if((a.x <= pos.x + 2 && a.x >= pos.x - 2) && (a.y <= pos.y + 2 && a.y >= pos.y - 2))
 			{	
 				//System.out.println(a +" " +pos + " " + agentsnake.currentX + " " + agentsnake.currentY);
 				return false;
