@@ -55,72 +55,76 @@ public class AgentImpl extends Agent {
 		Board board = getBoard();
 		if(board == null)
 			return Direction.NONE;
-		
-		
+
+
 		agentsnake = board.snakes[getPlayerId()];
 		Position asnake = new Position(agentsnake.currentX, agentsnake.currentY);
 		HashSet<Position> result = null;
-		Position othersnake = new Position(0, 0);
+		double plusproche = 10000000;
+
 		for(Snake snake : board.snakes)
 		{
 			checkInterruption();
-			/*Position othersnake = new Position(snake.currentX, snake.currentY);
+			//Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
-				result = a_etoile(asnake,othersnake);
-			}*/
-			if(snake.playerId != getPlayerId())
-			{
-				othersnake = new Position(snake.currentX, snake.currentY);
+				//result = a_etoile(asnake,othersnake);
+				
+				if(processObstacleSnake(snake)< plusproche)
+				{
+					plusproche = processObstacleSnake(snake);
+				}
 			}
+			
 		}
-		dir = trouveRoute(agentsnake, othersnake);
-		return dir;
-		
-		//if(result != null)
-		//{
-			/**if(previousDirection!=Direction.NONE && isInCorner())
+
+		if(plusproche < 40)
+		{	
+			System.out.println(plusproche);
+			if(previousDirection!=Direction.NONE && isInCorner())
 			{
 				dir = previousDirection;
 			}
 			else
 			{
 				updateAngles();
-				System.out.println("BBBB");
 				double closestObstacle[] = {Double.POSITIVE_INFINITY, 0};
 
 				for(int i=0;i<board.snakes.length;++i)
-				{	checkInterruption();	// on doit tester l'interruption au début de chaque boucle
+				{	
+					checkInterruption();	// on doit tester l'interruption au début de chaque boucle
 					Snake snake = board.snakes[i];
-	
+
 					// on traite seulement les serpents des autres joueurs
 					if(i != getPlayerId())
+					{
 						// on met à jour la distance à l'obstacle le plus proche
 						processObstacleSnake(snake, closestObstacle);
+					}
 				}
 
 				processObstacleBorder(closestObstacle);
 
-				dir = getDodgeDirection(closestObstacle[1]);*/
+				dir = getDodgeDirection(closestObstacle[1]);
+			}
+		}
 
-				//if(dir == Direction.NONE)
-				//{	
-					//System.out.println("ARRRRR");
-					/*for(Position pos : result)
-					{
-						checkInterruption();
-						//System.out.println(pos);
-						previousDirection = trouveRoute(agentsnake, pos);
-						return trouveRoute(agentsnake, pos);
-					}*/
-				//}
-					//return trouveRoute(agentsnake, othersnake);
-			//}
-		//}
-		//previousDirection = dir;
-		//return dir;
-		
+		else
+		{
+
+			for(Position pos : result)
+			{
+				checkInterruption();
+				dir =  trouveRoute(agentsnake, pos);
+			}
+
+		}
+		previousDirection = dir;
+		return dir;
 	}
+	
+	
+	
 	/** Moitié de l'angle de vision de l'agent, i.e. délimitant la zone traitée devant lui pour détecter des obstacles. Contrainte : doit être inférieure à PI */
 	private static double ANGLE_WIDTH = Math.PI/2;
 	
@@ -280,6 +284,33 @@ public class AgentImpl extends Agent {
 		// on teste si l'angle est supérieur à lowerBound + 2PI
 		else if(lowerBound<0 && angle>=lowerBound+2*Math.PI)
 			result = Direction.RIGHT;
+		
+		return result;
+	}
+	
+	private double processObstacleSnake(Snake snake)
+	{	checkInterruption();	// on doit tester l'interruption au début de chaque méthode
+		
+		double result = 1000000;
+		
+		// on récupère les positions de la trainée (complète) du serpent
+		Set<Position> trail = new TreeSet<Position>(snake.oldTrail);
+		trail.addAll(snake.newTrail);
+		
+		// pour chaque position de cette trainée
+		for(Position position: trail)
+		{	checkInterruption();	
+			// on calcule la distance entre cette position et la tête du serpent de l'agent
+			double dist = Math.sqrt(
+				Math.pow(agentsnake.currentX-position.x, 2) 
+				+ Math.pow(agentsnake.currentY-position.y,2));
+
+			// si la position est plus proche que le plus proche obstacle connu : on met à jour
+			if(dist<result)
+			{	result = dist;	// mise à jour de la distance
+			}			
+
+		}
 		
 		return result;
 	}
@@ -615,7 +646,7 @@ public class AgentImpl extends Agent {
 	 */
 	public boolean PosLibre(Position a)
 	{
-		Object o;
+	
 		checkInterruption();
 		Board board = getBoard();
 		//Set<Position> trail = new TreeSet<Position>();
