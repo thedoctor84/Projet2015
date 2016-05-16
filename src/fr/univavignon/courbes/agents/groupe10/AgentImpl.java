@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Vector;
 import java.util.HashMap;
 import fr.univavignon.courbes.common.Board;
 
@@ -654,14 +655,14 @@ public class AgentImpl extends Agent {
 		checkInterruption();
 		HashSet<Position> voisin = new HashSet<Position>();
 		
-		Position un = new Position(pos.x-10,pos.y-10);
-		Position deux = new Position(pos.x-10,pos.y);
-		Position trois = new Position(pos.x-10,pos.y+10);
-		Position quatre = new Position(pos.x,pos.y-10);
-		Position cinq = new Position(pos.x,pos.y+10);
-		Position six = new Position(pos.x+10,pos.y-10);
-		Position sept = new Position(pos.x+10,pos.y);
-		Position huit = new Position(pos.x+10,pos.y+10);
+		Position un = new Position(pos.x-5,pos.y-5);
+		Position deux = new Position(pos.x-5,pos.y);
+		Position trois = new Position(pos.x-5,pos.y+5);
+		Position quatre = new Position(pos.x,pos.y-5);
+		Position cinq = new Position(pos.x,pos.y+5);
+		Position six = new Position(pos.x+5,pos.y-5);
+		Position sept = new Position(pos.x+5,pos.y);
+		Position huit = new Position(pos.x+5,pos.y+5);
 		
 		voisin.add(un);
 		voisin.add(deux);
@@ -693,13 +694,14 @@ public class AgentImpl extends Agent {
 	
 		while(!open.isEmpty())
 		{
+			
 			//System.out.println(open.size());
 			checkInterruption();
 			Node u = plusPetitHeuristique(open); // on check en premier le noeud avec le plus petit cout heuristique dans open
 												// car il se rapproche le  plus de l'arrivée
 			open.remove(u);						//on enleve le noeud que l'on verifie
 		
-			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10)) // si on atteint l'objectif
+			if((u.pos.x <= arr.x + 15 && u.pos.x >= arr.x - 15) && (u.pos.y <= arr.y + 15 && u.pos.y >= arr.y - 15)) // si on atteint l'objectif
 			{
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
@@ -718,6 +720,7 @@ public class AgentImpl extends Agent {
 				HashSet<Position> voisin = returnNeighbors(u.pos); // on regarde tous les voisins de notre position
 				for(Position pos : voisin)
 				{
+					//System.out.println(PosLibre(pos));
 					checkInterruption();
 					
 					if(PosLibre(pos)) // si il n'y a pas d'obstacle à cette position
@@ -769,33 +772,48 @@ public class AgentImpl extends Agent {
 	 */
 	public boolean PosLibre(Position a)
 	{
+		Object o;
 		checkInterruption();
-		HashSet<Position> hs = new HashSet<Position>();
 		Board board = getBoard();
+		//Set<Position> trail = new TreeSet<Position>();
+		Vector<Position> trail  = new Vector<Position>();
+		Vector<Position> newtrail  = new Vector<Position>();
+		//trail.add(a);
+		
 
 		for(Snake snake : board.snakes)
 		{
-			for(Position pos : snake.oldTrail)
-			{
-				hs.add(pos);
-			}
+			checkInterruption();
+			trail.addAll(snake.oldTrail);
+			
 
-			/**for (Position pos : snake.newTrail)
-			{	
-				hs.add(pos);  
-			}*/
+			if(snake.playerId == getPlayerId())
+			{
+				newtrail.addAll(snake.newTrail);
+				
+				for(Position posi : newtrail)
+				{
+					if(trail.contains(posi))
+					{
+						trail.remove(posi);
+					}
+				}
+				
+			}
+			else
+			{
+				trail.addAll(snake.newTrail);
+			}
 		}
 		
-		for(Position pos : hs) 
+		for(Position pos : trail) 
 		{
-
+			checkInterruption();
 			if((a.x <= pos.x + 5 && a.x >= pos.x - 5) && (a.y <= pos.y + 5 && a.y >= pos.y - 5))
-			{
-				
-				System.out.println(pos);
+			{	
+				//System.out.println(a +" " +pos + " " + agentsnake.currentX + " " + agentsnake.currentY);
 				return false;
 			}
-
 		}
 
 		if(a.x >= board.width - 10 || a.x <= 10)

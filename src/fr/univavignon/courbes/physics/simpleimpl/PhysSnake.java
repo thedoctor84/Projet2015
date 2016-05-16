@@ -348,7 +348,7 @@ public class PhysSnake extends Snake
 	 * @return
 	 * 		{@code true} ssi une collision létale a été détectée.
 	 */
-	private boolean detectCollisions(PhysBoard board, Set<Position> physicalTrail)
+	private  boolean detectCollisions(PhysBoard board, Set<Position> physicalTrail)
 	{	boolean result = false;
 		int boardWidth = board.width;
 		int boardHeight = board.height;
