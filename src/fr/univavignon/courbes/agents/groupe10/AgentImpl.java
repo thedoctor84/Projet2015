@@ -65,10 +65,10 @@ public class AgentImpl extends Agent {
 		for(Snake snake : board.snakes)
 		{
 			checkInterruption();
-			//Position othersnake = new Position(snake.currentX, snake.currentY);
+			Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
-				//result = a_etoile(asnake,othersnake);
+				result = a_etoile(asnake,othersnake);
 				
 				if(processObstacleSnake(snake)< plusproche)
 				{
