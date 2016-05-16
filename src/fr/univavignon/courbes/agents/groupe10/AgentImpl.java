@@ -96,11 +96,11 @@ public class AgentImpl extends Agent {
 					Snake snake = board.snakes[i];
 
 					// on traite seulement les serpents des autres joueurs
-					if(i != getPlayerId())
-					{
-						// on met à jour la distance à l'obstacle le plus proche
-						processObstacleSnake(snake, closestObstacle);
-					}
+
+
+					// on met à jour la distance à l'obstacle le plus proche
+					processObstacleSnake(snake, closestObstacle);
+
 				}
 
 				processObstacleBorder(closestObstacle);
@@ -182,11 +182,27 @@ public class AgentImpl extends Agent {
 	private void processObstacleSnake(Snake snake, double result[])
 	{	
 		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
-		
+		Vector<Position> trail = new Vector<Position>();
 		// on récupère les positions de la trainée (complète) du serpent
-		Set<Position> trail = new TreeSet<Position>(snake.oldTrail);
-		trail.addAll(snake.newTrail);
-		
+		if(snake.playerId != getPlayerId())
+		{
+			 trail.addAll(snake.oldTrail);
+			trail.addAll(snake.newTrail);
+		}
+		else
+		{
+			Vector<Position> newtrail  = new Vector<Position>();
+			trail.addAll(snake.oldTrail);
+			
+			for(Position posi : newtrail)
+			{
+				if(trail.contains(posi))
+				{
+					trail.remove(posi);
+				}
+			}
+			
+		}
 		// pour chaque position de cette trainée
 		for(Position position: trail)
 		{	checkInterruption();	// une boucle, donc un autre test d'interruption
