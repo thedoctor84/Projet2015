@@ -2,6 +2,7 @@ package fr.univavignon.courbes.agents.groupe10;
 
 import fr.univavignon.courbes.agents.Agent;
 import fr.univavignon.courbes.common.Direction;
+import fr.univavignon.courbes.common.ItemInstance;
 import fr.univavignon.courbes.common.Position;
 import fr.univavignon.courbes.common.Snake;
 
@@ -68,7 +69,17 @@ public class AgentImpl extends Agent {
 			Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
-				result = a_etoile(asnake,othersnake);
+				Position posi = new Position(101,100);
+				
+				if(board.items.size() != 0)
+				{
+					System.out.println("ITEEEEM");
+					 posi.x = board.items.get(0).x;
+					 posi.y = board.items.get(0).y;
+				}
+				
+				
+				result = a_etoile(asnake,posi);
 				
 				if(processObstacleSnake(snake)< plusproche)
 				{
@@ -166,6 +177,7 @@ public class AgentImpl extends Agent {
 			|| getBoard().width-agentsnake.currentX<CORNER_THRESHOLD && getBoard().height-agentsnake.currentY<CORNER_THRESHOLD;
 		return result;
 	}
+	
 	
 	/**
 	 * Reçoit un serpent et détermine le point le plus proche de sa
@@ -591,7 +603,7 @@ public class AgentImpl extends Agent {
 												// car il se rapproche le  plus de l'arrivée
 			open.remove(u);						//on enleve le noeud que l'on verifie
 		
-			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10)) // si on atteint l'objectif
+			if((u.pos.x <= arr.x + 20 && u.pos.x >= arr.x - 20) && (u.pos.y <= arr.y + 20 && u.pos.y >= arr.y - 20)) // si on atteint l'objectif
 			{
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
