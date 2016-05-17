@@ -80,7 +80,7 @@ public class AgentImpl extends Agent {
 				}
 				
 			
-				result = aEtoile(asnake,othersnake);
+				result = aEtoile(asnake,posi);
 
 				
 				if(processObstacleSnake(snake)< plusproche)
