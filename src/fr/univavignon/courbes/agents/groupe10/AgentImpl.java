@@ -69,6 +69,7 @@ public class AgentImpl extends Agent {
 			Position othersnake = new Position(snake.currentX, snake.currentY);
 			if(snake.playerId != getPlayerId())
 			{
+
 				Position posi = new Position(101,100);
 				
 				if(board.items.size() != 0)
@@ -78,15 +79,15 @@ public class AgentImpl extends Agent {
 					 posi.y = board.items.get(0).y;
 				}
 				
-				
-				result = a_etoile(asnake,posi);
+			
+				result = aEtoile(asnake,othersnake);
+
 				
 				if(processObstacleSnake(snake)< plusproche)
 				{
 					plusproche = processObstacleSnake(snake);
 				}
-			}
-			
+			}	
 		}
 
 		if(plusproche < 40)
@@ -423,7 +424,7 @@ public class AgentImpl extends Agent {
 	 * Récupère toutes les positions de tous les serpent et crée un set.
 	 * @return hs set contenant toutes les positions des snakes
 	 */
-	public HashSet<Position>  CreateBoard()
+	public HashSet<Position>  createBoard()
 	{
 		checkInterruption();
 		HashSet<Position> hs = new HashSet<Position>();
@@ -508,7 +509,7 @@ public class AgentImpl extends Agent {
 	 * @param map Map a verifier
 	 * @return true or false
 	 */
-	public boolean PosExist(Position a, HashMap<Node,Double> map)
+	public boolean posExist(Position a, HashMap<Node,Double> map)
 	{
 		checkInterruption();
 		for(Map.Entry<Node,Double> e : map.entrySet())
@@ -528,10 +529,10 @@ public class AgentImpl extends Agent {
 	 * @param cost le cout à ne pas dépasser
 	 * @return true or false
 	 */
-	public boolean PosExistWithInfCost(Position a, HashMap<Node,Double> map, double cost)
+	public boolean posExistWithInfCost(Position a, HashMap<Node,Double> map, double cost)
 	{
 		checkInterruption();
-		if(!PosExist(a,map))
+		if(!posExist(a,map))
 		{
 			return false;
 		}
@@ -583,7 +584,7 @@ public class AgentImpl extends Agent {
 	 * @param arr position d'arrivée
 	 * @return tableau contenant le chemin le plus court
 	 */
-	public HashSet<Position> a_etoile(Position dep, Position arr)
+	public HashSet<Position> aEtoile(Position dep, Position arr)
 	{
 		checkInterruption();
 		Node current = new Node();
@@ -625,10 +626,10 @@ public class AgentImpl extends Agent {
 					//System.out.println(PosLibre(pos));
 					checkInterruption();
 					
-					if(PosLibre(pos)) // si il n'y a pas d'obstacle à cette position
+					if(posLibre(pos)) // si il n'y a pas d'obstacle à cette position
 					{
 						
-						if(PosExistWithInfCost(pos,closed,(u.cout+1)) || PosExistWithInfCost(pos,open,(u.cout+1))) // si la position existe deja dans open ou closed avec un cout inferieur on ne fait rien
+						if(posExistWithInfCost(pos,closed,(u.cout+1)) || posExistWithInfCost(pos,open,(u.cout+1))) // si la position existe deja dans open ou closed avec un cout inferieur on ne fait rien
 						{
 							//System.out.println("ARRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGGG");
 							continue;
@@ -636,7 +637,7 @@ public class AgentImpl extends Agent {
 						else
 						{
 							
-							if(PosExist(pos,open)) // si la position existe deja mais avec un cout supérieur on la remplace
+							if(posExist(pos,open)) // si la position existe deja mais avec un cout supérieur on la remplace
 							{
 								
 								Node temp = findWithPos(pos,open);
@@ -672,7 +673,7 @@ public class AgentImpl extends Agent {
 	 * @param a position à verifier
 	 * @return true or false
 	 */
-	public boolean PosLibre(Position a)
+	public boolean posLibre(Position a)
 	{
 	
 		checkInterruption();
