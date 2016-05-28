@@ -29,7 +29,8 @@ public class AgentImpl extends Agent {
 	/** Direction précédemment choisie par cet agent */
 	private Direction previousDirection = Direction.NONE;
 	
-	private Position lastone;
+	
+	private Position temp;
 	
 	/**
 	 * La classe Node representant un noeud sert à l'algorithme A*
@@ -58,10 +59,10 @@ public class AgentImpl extends Agent {
 		Board board = getBoard();
 		if(board == null)
 			return Direction.NONE;
-
-
+		
 		agentsnake = board.snakes[getPlayerId()];
 		Position asnake = new Position(agentsnake.currentX, agentsnake.currentY);
+		
 		HashSet<Position> result = null;
 		double plusproche = 10000000;
 
@@ -80,15 +81,19 @@ public class AgentImpl extends Agent {
 					 posi.y = board.items.get(0).y;
 				}
 				
-				result = aEtoile(asnake,plusSur(50));
-			
+				temp = asnake;
+				
+				//result = aEtoile(asnake,plusSur(10));
+				plusSur(5,temp,2);
+				
+				
 				if(processObstacleSnake(snake)< plusproche)
 				{
 					plusproche = processObstacleSnake(snake);
 				}
 			}	
 		}
-
+		/**
 		if(plusproche < 40)
 		{	
 			System.out.println(plusproche);
@@ -118,48 +123,72 @@ public class AgentImpl extends Agent {
 
 				dir = getDodgeDirection(closestObstacle[1]);
 			}
-		}
+		}*/
 
-		else
+		//else
 		{
-
-			for(Position pos : result)
-			{
 				checkInterruption();
-				dir =  trouveRoute(agentsnake, pos);
-				System.out.println(pos);
-				System.out.println(dir);
+				dir =  trouveRoute(agentsnake, temp);
 				
-				break;
-			}
-
 		}
+
 		previousDirection = dir;
 		return dir;
 	}
 	
 	
-	public Position plusSur(int ecart)
+	public int plusSur(int ecart, Position a, int profondeur)
 	{
-		Vector <Position> vp = new Vector <Position>();
+
+		int score_interne = 0;
+		int score_externe = 0;
+		int score_interne2 = -100000;
+		int score_temp = 0;
 		
-		for(int i = 0; i < 800; i += 50)
+		HashSet<Position> vp = new HashSet<Position>();
+		vp = returnNeighbors(a);
+		
+		if(profondeur == 0)
 		{
-			for(int j = 0; j < 800; j += 50)
+			for(Position pos : vp)
 			{
-				vp.add(new Position(i,j));
+				if(posLibre(pos, ecart))
+				{
+					score_interne += 10;
+				}
+				else
+				{
+					score_interne -= 10;
+				}
 			}
+			return score_interne;
 		}
 		
 		for(Position pos : vp)
 		{
-			if(posLibre(pos, 50))
+			
+			score_temp = plusSur(ecart, pos, profondeur - 1);
+			score_externe += score_temp;
+			
+			if(score_temp > score_interne2)
 			{
-				return pos;
+				a.x = pos.x;
+				a.y = pos.y;
+				score_interne2 = score_temp;
 			}
-		}
 		
-		return plusSur(ecart - 10);
+			if(posLibre(pos,ecart))
+			{
+				score_externe += 20;
+			}
+			
+			else
+			{
+				score_externe -= 20;
+			}
+			
+		}
+		return score_externe;
 	}
 	
 	
@@ -631,7 +660,7 @@ public class AgentImpl extends Agent {
 												// car il se rapproche le  plus de l'arrivée
 			open.remove(u);						//on enleve le noeud que l'on verifie
 		
-			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10)) // si on atteint l'objectif
+			if((u.pos.x <= arr.x + 5 && u.pos.x >= arr.x - 5) && (u.pos.y <= arr.y + 5 && u.pos.y >= arr.y - 5)) // si on atteint l'objectif
 			{
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
@@ -738,17 +767,16 @@ public class AgentImpl extends Agent {
 			checkInterruption();
 			if((a.x <= pos.x + ecart && a.x >= pos.x - ecart) && (a.y <= pos.y + ecart && a.y >= pos.y - ecart))
 			{	
-				//System.out.println(a +" " +pos + " " + agentsnake.currentX + " " + agentsnake.currentY);
 				return false;
 			}
 		}
 
-		if(a.x >= board.width - 10 || a.x <= 10)
+		if(a.x >= board.width - 0 || a.x <= 0)
 		{
 			return false;
 		}
 
-		if(a.y >= board.height - 10 || a.y <= 10)
+		if(a.y >= board.height - 0 || a.y <= 0)
 		{
 			return false;
 		}
