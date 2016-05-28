@@ -29,6 +29,8 @@ public class AgentImpl extends Agent {
 	/** Direction précédemment choisie par cet agent */
 	private Direction previousDirection = Direction.NONE;
 	
+	private Position lastone;
+	
 	/**
 	 * La classe Node representant un noeud sert à l'algorithme A*
 	 *
@@ -78,7 +80,6 @@ public class AgentImpl extends Agent {
 					 posi.y = board.items.get(0).y;
 				}
 				
-				System.out.println(plusSur(50));
 				result = aEtoile(asnake,plusSur(50));
 			
 				if(processObstacleSnake(snake)< plusproche)
@@ -119,13 +120,16 @@ public class AgentImpl extends Agent {
 			}
 		}
 
-		//else
+		else
 		{
 
 			for(Position pos : result)
 			{
 				checkInterruption();
 				dir =  trouveRoute(agentsnake, pos);
+				System.out.println(pos);
+				System.out.println(dir);
+				
 				break;
 			}
 
@@ -627,7 +631,7 @@ public class AgentImpl extends Agent {
 												// car il se rapproche le  plus de l'arrivée
 			open.remove(u);						//on enleve le noeud que l'on verifie
 		
-			if((u.pos.x <= arr.x + 20 && u.pos.x >= arr.x - 20) && (u.pos.y <= arr.y + 20 && u.pos.y >= arr.y - 20)) // si on atteint l'objectif
+			if((u.pos.x <= arr.x + 10 && u.pos.x >= arr.x - 10) && (u.pos.y <= arr.y + 10 && u.pos.y >= arr.y - 10)) // si on atteint l'objectif
 			{
 				HashSet<Position> chemin = new HashSet<Position>();
 				Node temp = u;
@@ -646,15 +650,12 @@ public class AgentImpl extends Agent {
 				HashSet<Position> voisin = returnNeighbors(u.pos); // on regarde tous les voisins de notre position
 				for(Position pos : voisin)
 				{
-					//System.out.println(PosLibre(pos));
 					checkInterruption();
 					
-					if(posLibre(pos, 2)) // si il n'y a pas d'obstacle à cette position
+					if(posLibre(pos, 5)) // si il n'y a pas d'obstacle à cette position
 					{
-						
 						if(posExistWithInfCost(pos,closed,(u.cout+1)) || posExistWithInfCost(pos,open,(u.cout+1))) // si la position existe deja dans open ou closed avec un cout inferieur on ne fait rien
 						{
-							//System.out.println("ARRRRRRRRRRRRRRRRGGGGGGGGGGGGGGGGGG");
 							continue;
 						}
 						else
