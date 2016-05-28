@@ -74,15 +74,13 @@ public class AgentImpl extends Agent {
 				
 				if(board.items.size() != 0)
 				{
-					System.out.println("ITEEEEM");
 					 posi.x = board.items.get(0).x;
 					 posi.y = board.items.get(0).y;
 				}
 				
+				System.out.println(plusSur(50));
+				result = aEtoile(asnake,plusSur(50));
 			
-				result = aEtoile(asnake,posi);
-
-				
 				if(processObstacleSnake(snake)< plusproche)
 				{
 					plusproche = processObstacleSnake(snake);
@@ -121,18 +119,43 @@ public class AgentImpl extends Agent {
 			}
 		}
 
-		else
+		//else
 		{
 
 			for(Position pos : result)
 			{
 				checkInterruption();
 				dir =  trouveRoute(agentsnake, pos);
+				break;
 			}
 
 		}
 		previousDirection = dir;
 		return dir;
+	}
+	
+	
+	public Position plusSur(int ecart)
+	{
+		Vector <Position> vp = new Vector <Position>();
+		
+		for(int i = 0; i < 800; i += 50)
+		{
+			for(int j = 0; j < 800; j += 50)
+			{
+				vp.add(new Position(i,j));
+			}
+		}
+		
+		for(Position pos : vp)
+		{
+			if(posLibre(pos, 50))
+			{
+				return pos;
+			}
+		}
+		
+		return plusSur(ecart - 10);
 	}
 	
 	
@@ -398,25 +421,25 @@ public class AgentImpl extends Agent {
 	 */
 	public Direction trouveRoute(Snake bot, Position dest)
 	{
-		checkInterruption();	// on doit tester l'interruption au début de chaque méthode
-		final double INTERVALLE_ANGLE = Math.PI/18; // = 10 degre
-		updateAngles();
-		double angle = Math.atan2(dest.y-agentsnake.currentY, dest.x-agentsnake.currentX);
-		if(angle<0)
-			angle = angle + 2*Math.PI;
-		
-		if( Math.abs(distance(currentAngle,angle)) < INTERVALLE_ANGLE)
-		{
-			return Direction.NONE;
-		}
-		else if(distance(currentAngle,angle) < 0)
-		{
-			return Direction.LEFT;
-		}
-		else
-		{
-			return Direction.RIGHT;
-		}
+				checkInterruption();	// on doit tester l'interruption au début de chaque méthode
+				final double INTERVALLE_ANGLE = Math.PI/18; // = 10 degre
+		 		updateAngles();
+		 		double angle = Math.atan2(dest.y-agentsnake.currentY, dest.x-agentsnake.currentX);
+		 		if(angle<0)
+		 			angle = angle + 2*Math.PI;
+		 		
+				if( Math.abs(distance(currentAngle,angle)) < INTERVALLE_ANGLE)
+		 		{
+		 			return Direction.NONE;
+		 		}
+				else if(distance(currentAngle,angle) < 0)
+		 		{
+		 			return Direction.LEFT;
+		 		}
+		 		else
+		 		{
+		 			return Direction.RIGHT;
+		 		}
 	}
 	
 	
@@ -626,7 +649,7 @@ public class AgentImpl extends Agent {
 					//System.out.println(PosLibre(pos));
 					checkInterruption();
 					
-					if(posLibre(pos)) // si il n'y a pas d'obstacle à cette position
+					if(posLibre(pos, 2)) // si il n'y a pas d'obstacle à cette position
 					{
 						
 						if(posExistWithInfCost(pos,closed,(u.cout+1)) || posExistWithInfCost(pos,open,(u.cout+1))) // si la position existe deja dans open ou closed avec un cout inferieur on ne fait rien
@@ -673,7 +696,7 @@ public class AgentImpl extends Agent {
 	 * @param a position à verifier
 	 * @return true or false
 	 */
-	public boolean posLibre(Position a)
+	public boolean posLibre(Position a, int ecart)
 	{
 	
 		checkInterruption();
@@ -712,7 +735,7 @@ public class AgentImpl extends Agent {
 		for(Position pos : trail) 
 		{
 			checkInterruption();
-			if((a.x <= pos.x + 2 && a.x >= pos.x - 2) && (a.y <= pos.y + 2 && a.y >= pos.y - 2))
+			if((a.x <= pos.x + ecart && a.x >= pos.x - ecart) && (a.y <= pos.y + ecart && a.y >= pos.y - ecart))
 			{	
 				//System.out.println(a +" " +pos + " " + agentsnake.currentX + " " + agentsnake.currentY);
 				return false;
