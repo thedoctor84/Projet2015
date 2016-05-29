@@ -57,7 +57,7 @@ public class ProfilRes
 			i++;
 		}
 		
-		System.out.println(a.elementAt(0));
+		//System.out.println(a.elementAt(0));
 
 		return a;
 	}

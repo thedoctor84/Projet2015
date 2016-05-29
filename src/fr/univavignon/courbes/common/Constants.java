@@ -152,11 +152,11 @@ public class Constants
 		POINT_LIMIT_FOR_PLAYER_NBR.put(4,30);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(5,40);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(6,50);
-		POINT_LIMIT_FOR_PLAYER_NBR.put(2,3);
+		/*POINT_LIMIT_FOR_PLAYER_NBR.put(2,3);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(3,4);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(4,5);
 		POINT_LIMIT_FOR_PLAYER_NBR.put(5,6);
-		POINT_LIMIT_FOR_PLAYER_NBR.put(6,7);
+		POINT_LIMIT_FOR_PLAYER_NBR.put(6,7);*/
 	}
 	
 	////////////////////////////////////////////////////////////////

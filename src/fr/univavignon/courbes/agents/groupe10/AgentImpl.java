@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.HashMap;
 import fr.univavignon.courbes.common.Board;
+import fr.univavignon.courbes.common.Constants;
 
 /**
  * Agent artificiel du groupe 10
@@ -66,7 +67,11 @@ public class AgentImpl extends Agent {
 		HashSet<Position> result = null;
 		double plusproche = 10000000;
 
-		for(Snake snake : board.snakes)
+		
+		posLibre(asnake,Constants.BASE_HEAD_RADIUS*10);
+		temp = asnake;
+		return Direction.NONE;
+		/*for(Snake snake : board.snakes)
 		{
 			checkInterruption();
 			Position othersnake = new Position(snake.currentX, snake.currentY);
@@ -84,7 +89,7 @@ public class AgentImpl extends Agent {
 				temp = asnake;
 				
 				//result = aEtoile(asnake,plusSur(10));
-				plusSur(5,temp,2);
+				plusSur(5,temp,0);
 				
 				
 				if(processObstacleSnake(snake)< plusproche)
@@ -92,7 +97,7 @@ public class AgentImpl extends Agent {
 					plusproche = processObstacleSnake(snake);
 				}
 			}	
-		}
+		}*/
 		/**
 		if(plusproche < 40)
 		{	
@@ -126,20 +131,20 @@ public class AgentImpl extends Agent {
 		}*/
 
 		//else
-		{
-				checkInterruption();
-				dir =  trouveRoute(agentsnake, temp);
+		//{
+		/*checkInterruption();
+		dir =  trouveRoute(agentsnake, temp);
 				
-		}
+		//}
 
 		previousDirection = dir;
-		return dir;
+		return dir;*/
 	}
 	
 	
 	public int plusSur(int ecart, Position a, int profondeur)
 	{
-
+		checkInterruption();
 		int score_interne = 0;
 		int score_externe = 0;
 		int score_interne2 = -100000;
@@ -152,6 +157,7 @@ public class AgentImpl extends Agent {
 		{
 			for(Position pos : vp)
 			{
+				checkInterruption();
 				if(posLibre(pos, ecart))
 				{
 					score_interne += 10;
@@ -161,12 +167,13 @@ public class AgentImpl extends Agent {
 					score_interne -= 10;
 				}
 			}
+			//System.out.println("Le score pronfondeur 0 est :"+score_interne);
 			return score_interne;
 		}
 		
 		for(Position pos : vp)
 		{
-			
+			checkInterruption();
 			score_temp = plusSur(ecart, pos, profondeur - 1);
 			score_externe += score_temp;
 			
@@ -181,12 +188,10 @@ public class AgentImpl extends Agent {
 			{
 				score_externe += 20;
 			}
-			
 			else
 			{
 				score_externe -= 20;
-			}
-			
+			}	
 		}
 		return score_externe;
 	}
@@ -731,34 +736,30 @@ public class AgentImpl extends Agent {
 	
 		checkInterruption();
 		Board board = getBoard();
-		//Set<Position> trail = new TreeSet<Position>();
-		Vector<Position> trail  = new Vector<Position>();
-		Vector<Position> newtrail  = new Vector<Position>();
-		//trail.add(a);
-		
+		Vector<Position> trail  = new Vector<Position>(); // trainée du snake avec oldTrail et NewTrail
+		Vector<Position> newtrail  = new Vector<Position>(); // on va enlever newTrail a trail
 
 		for(Snake snake : board.snakes)
 		{
 			checkInterruption();
-			trail.addAll(snake.oldTrail);
-			
+			//trail.addAll(snake.oldTrail);
 
 			if(snake.playerId == getPlayerId())
 			{
-				newtrail.addAll(snake.newTrail);
+				/*newtrail.addAll(snake.newTrail);
 				
 				for(Position posi : newtrail)
 				{
+					checkInterruption();
 					if(trail.contains(posi))
 					{
 						trail.remove(posi);
 					}
-				}
-				
+				}*/
 			}
 			else
 			{
-				trail.addAll(snake.newTrail);
+				trail.addAll(snake.oldTrail);
 			}
 		}
 		
@@ -767,20 +768,25 @@ public class AgentImpl extends Agent {
 			checkInterruption();
 			if((a.x <= pos.x + ecart && a.x >= pos.x - ecart) && (a.y <= pos.y + ecart && a.y >= pos.y - ecart))
 			{	
+				System.out.println("a.x ="+a.x+", a.y = "+a.y);
+				System.out.println("pos.x ="+pos.x+", pos.y = "+pos.y);
+				System.out.println("UN OBSTACLE EST DETECTE !");
 				return false;
 			}
 		}
 
-		if(a.x >= board.width - 0 || a.x <= 0)
+		if(a.x >= board.width - ecart || a.x <= ecart)
 		{
+			System.out.println("BORD GAUCHE/DROIT DETECTE !");
 			return false;
 		}
 
-		if(a.y >= board.height - 0 || a.y <= 0)
+		if(a.y >= board.height - ecart || a.y <= ecart)
 		{
+			System.out.println("BORD HAUT/BAS DETECTE !");
 			return false;
 		}
-		
+		System.out.println("EMPLACEMENT LIBRE !");
 		return true;
 	}
 
